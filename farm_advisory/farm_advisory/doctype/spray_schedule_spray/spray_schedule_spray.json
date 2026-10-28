@@ -1,0 +1,57 @@
+{
+ "actions": [],
+ "creation": "2026-10-23 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "spray_no",
+  "spray_date",
+  "spray_total",
+  "spray_pack_total"
+ ],
+ "fields": [
+  {
+   "fieldname": "spray_no",
+   "fieldtype": "Int",
+   "label": "Spray No.",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "spray_date",
+   "fieldtype": "Date",
+   "label": "Spray Date",
+   "in_list_view": 1,
+   "columns": 3
+  },
+  {
+   "fieldname": "spray_total",
+   "fieldtype": "Currency",
+   "label": "Spray Total",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 3
+  },
+  {
+   "fieldname": "spray_pack_total",
+   "fieldtype": "Currency",
+   "label": "Value at Full Packs",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 3
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-23 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Farm Advisory",
+ "name": "Spray Schedule Spray",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1,
+ "editable_grid": 1
+}

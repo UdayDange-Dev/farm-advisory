@@ -1,0 +1,120 @@
+{#- Fertilizer Basal Dose Recommendation. Context: r = fa_basal_context(doc).
+    Sections follow the printable view of basal-dose-calculator.html. -#}
+<style>
+.fa-bd{--g:#1f6f43;--g2:#2e8b57;--gl:#e8f5ec;--ink:#1d2b24;--mut:#5d6f65;--line:#d5e2d9;color:var(--ink);
+  font-family:"Segoe UI",'Noto Sans',Arial,sans-serif;font-size:11px;line-height:1.4;max-width:794px;margin:0 auto;background:#fff}
+.fa-bd *{box-sizing:border-box}
+.fa-bd .head{display:flex;align-items:center;gap:12px;border-bottom:3px solid var(--g);padding-bottom:8px;margin-bottom:8px}
+.fa-bd .head img{height:54px;width:auto}
+.fa-bd .head .co{flex:1}
+.fa-bd .head h2{margin:0;font-size:16px;color:var(--g)}
+.fa-bd .head .sub{color:var(--mut);font-size:11px}
+.fa-bd .card{border:1px solid #999;border-radius:8px;padding:8px 10px;margin-bottom:10px;break-inside:avoid}
+.fa-bd .card h3{margin:0 0 6px;color:var(--g);font-size:13px}
+.fa-bd .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px 12px}
+.fa-bd .grid small{display:block;color:var(--mut);font-size:9.5px;font-weight:600}
+.fa-bd table{border-collapse:collapse;width:100%;font-size:10px;margin-top:6px}
+.fa-bd th{background:var(--gl);color:var(--g);text-align:left;padding:4px;border:1px solid var(--line)}
+.fa-bd td{padding:3px 4px;border:1px solid var(--line);vertical-align:top}
+.fa-bd .r{text-align:right;white-space:nowrap}
+.fa-bd tfoot td{background:var(--gl);font-weight:700;border-top:2px solid var(--g2)}
+.fa-bd .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:6px}
+.fa-bd .kpi{background:var(--gl);border-radius:6px;padding:5px 7px}
+.fa-bd .kpi b{display:block;font-size:13px;color:var(--g)}
+.fa-bd .kpi span{font-size:9.5px;color:var(--mut)}
+.fa-bd .kpi.big{background:var(--g)}.fa-bd .kpi.big b,.fa-bd .kpi.big span{color:#fff}
+.fa-bd .note{font-size:10px;color:var(--mut);text-align:center;margin-top:8px}
+.fa-bd .crop-no{display:inline-block;margin-right:6px;padding:1px 7px;border-radius:9px;background:var(--gl);font-size:10px}
+.fa-bd .card .hint{margin:0 0 4px;color:var(--mut);font-size:9.5px}
+.fa-bd .total{border:2px solid var(--g)}
+.fa-bd .total table{font-size:11px}
+.fa-bd .total tfoot td{font-size:13px}
+/* a crop's heading and details always start on the same page as its fertilizer table;
+   a crop too long for one page may continue on the next, with the table header repeated */
+.fa-bd .card h3,.fa-bd .grid,.fa-bd .card .hint{break-after:avoid;page-break-after:avoid}
+.fa-bd .crop{break-inside:auto}
+.fa-bd thead{display:table-header-group}
+.fa-bd .kpis,.fa-bd tfoot{break-inside:avoid;break-before:avoid}
+@media print{.fa-bd *{-webkit-print-color-adjust:exact;print-color-adjust:exact}.fa-bd tr{break-inside:avoid}}
+</style>
+<div class="fa-bd">
+  <div class="head">
+    {% if r.logo %}<img src="{{ r.logo }}" alt="">{% endif %}
+    <div class="co">
+      <h2>Fertilizer Basal Dose Recommendation</h2>
+      <div class="sub">{{ r.company | e }}</div>
+      <div class="sub">{{ r.farmer_name | e }} · {{ r.printed_on }}{% if r.doc_name %} · {{ r.doc_name }}{% endif %}</div>
+    </div>
+  </div>
+
+  <div class="card"><h3>Farmer Details</h3><div class="grid">
+    <div style="grid-column:span 2"><small>Farmer</small>{{ r.farmer_name | e }}</div>
+    <div><small>Mobile No.</small>{{ (r.mobile or "—") | e }}</div>
+    <div><small>WhatsApp No.</small>{{ (r.whatsapp or "—") | e }}</div>
+    <div style="grid-column:span 3"><small>Address</small>{{ (r.address or "—") | e }}</div>
+    <div><small>Email ID</small>{{ (r.email or "—") | e }}</div>
+  </div><div style="margin-top:4px;color:#5d6f65;font-size:10px">Bag quantity rounding: {{ r.rounding }}</div></div>
+
+  {% for c in r.crops %}
+  <div class="card crop">
+    <h3><span class="crop-no">Crop {{ loop.index }}</span>{{ c.title | e }} — Crop Recommendation</h3>
+    <div class="grid">
+      <div><small>Crop</small>{{ c.crop | e }}</div><div><small>Variety</small>{{ c.variety | e }}</div>
+      {% for k, v in c.details %}<div><small>{{ k }}</small>{{ v }}</div>{% endfor %}
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>Fertilizer</th><th class="r">Pack (kg)</th><th>Contains</th><th class="r">Rate</th><th>Unit</th>
+        <th class="r">Total qty (kg)</th><th class="r">Bags</th><th class="r">Cost / bag ₹</th><th class="r">₹ / kg</th>
+        <th class="r">Total ₹</th><th class="r">₹ / plant</th></tr></thead>
+      <tbody>
+      {% for f in c.rows %}
+        <tr><td>{{ f.no }}</td><td>{{ f.fertilizer | e }}</td><td class="r">{{ f.pack }}</td><td>{{ f.contains | e }}</td>
+          <td class="r">{{ f.rate }}</td><td>{{ f.unit }}</td><td class="r">{{ f.kg }}</td><td class="r">{{ f.bags }}</td>
+          <td class="r">{{ f.cost }}</td><td class="r">{{ f.perkg }}</td><td class="r">{{ f.amount }}</td><td class="r">{{ f.cpp }}</td></tr>
+      {% else %}<tr><td colspan="12" style="color:#5d6f65">No fertilizers added.</td></tr>{% endfor %}
+      </tbody>
+      <tfoot><tr><td></td><td>{{ c.crop | e }} subtotal</td><td></td><td></td><td class="r">{{ c.t_gm }}</td><td>gm / plant</td>
+        <td class="r">{{ c.t_kg }}</td><td class="r">{{ c.t_bags }}</td><td></td><td></td><td class="r">{{ c.t_amount }}</td>
+        <td class="r">{{ c.t_cpp }}</td></tr></tfoot>
+    </table>
+    <div class="kpis">
+      <div class="kpi"><b>{{ c.plants }}</b><span>Total plants</span></div>
+      <div class="kpi"><b>{{ c.t_gm }} gm</b><span>Dose per plant</span></div>
+      <div class="kpi"><b>{{ c.t_cpp }}</b><span>Cost per plant</span></div>
+      <div class="kpi"><b>{{ c.t_kg }} kg</b><span>Total fertilizer qty</span></div>
+      <div class="kpi big"><b>{{ c.t_amount }}</b><span>{{ c.crop | e }} subtotal</span></div>
+    </div>
+  </div>
+  {% endfor %}
+
+  {% if r.show_purchase %}
+  <div class="card"><h3>Combined Fertilizer Purchase Summary</h3>
+    <p class="hint">The same fertilizer and pack size added up across all crops, for purchasing. These amounts are already in
+      the crop subtotals and are not added to the total again.</p>
+    <table>
+      <thead><tr><th>Fertilizer</th><th class="r">Pack (kg)</th><th class="r">Total qty (kg)</th><th class="r">Amount (sum of crop-wise)</th></tr></thead>
+      <tbody>{% for p in r.purchase %}<tr><td>{{ p.name | e }}</td><td class="r">{{ p.pack }}</td><td class="r">{{ p.kg }}</td><td class="r">{{ p.amount }}</td></tr>{% endfor %}</tbody>
+    </table>
+  </div>
+  {% endif %}
+
+  <div class="card total"><h3>Total Recommendation Cost</h3>
+    <p class="hint">Crop-wise summary. The total is the sum of the crop subtotals.</p>
+    <table>
+      <thead><tr><th>Crop</th><th>Variety</th><th class="r">Area</th><th class="r">Plants</th><th class="r">Dose / plant</th>
+        <th class="r">Total qty</th><th class="r">Bags</th><th class="r">Cost / plant</th><th class="r">Total cost</th></tr></thead>
+      <tbody>
+      {% for c in r.crops %}
+        <tr><td>{{ c.crop | e }}</td><td>{{ c.variety | e }}</td><td class="r">{{ c.area }}</td><td class="r">{{ c.plants }}</td>
+          <td class="r">{{ c.t_gm }} gm</td><td class="r">{{ c.t_kg }} kg</td><td class="r">{{ c.t_bags }}</td>
+          <td class="r">{{ c.t_cpp }}</td><td class="r"><b>{{ c.t_amount }}</b></td></tr>
+      {% else %}<tr><td colspan="9">No crops added.</td></tr>{% endfor %}
+      </tbody>
+      <tfoot><tr><td colspan="3">TOTAL RECOMMENDATION COST ({{ r.crop_count }} crop{{ "" if r.crop_count == 1 else "s" }})</td>
+        <td class="r">{{ r.total_plants }}</td><td></td><td class="r">{{ r.total_kg }} kg</td><td></td><td></td>
+        <td class="r">{{ r.grand }}</td></tr></tfoot>
+    </table>
+  </div>
+
+  <div class="note">Estimates only – product prices &amp; availability may vary. Always follow soil-test and expert recommendations.</div>
+</div>

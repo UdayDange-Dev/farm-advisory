@@ -8,18 +8,20 @@ app_license = "mit"
 # Apps
 # ------------------
 
-# required_apps = []
+required_apps = ["erpnext"]
+app_logo_url = "/assets/farm_advisory/images/agrismart_logo.png"
+app_home = "/desk/farm-advisory"
 
 # Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "farm_advisory",
-# 		"logo": "/assets/farm_advisory/logo.png",
-# 		"title": "Farm Advisory",
-# 		"route": "/farm_advisory",
-# 		"has_permission": "farm_advisory.api.permission.has_app_permission",
-# 	}
-# ]
+add_to_apps_screen = [
+	{
+		"name": "farm_advisory",
+		"logo": "/assets/farm_advisory/images/agrismart_logo.png",
+		"title": "Farm Advisory",
+		"route": "/desk/farm-advisory",
+		"has_permission": "farm_advisory.utils.permissions.has_app_permission",
+	}
+]
 
 # The dock, the rail down the left of the desk, is a document rather than a hook. Author it in
 # Manage Dock on a developer-mode site and press Export to App, and it is written to
@@ -35,7 +37,7 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/farm_advisory/css/farm_advisory.css"
-# app_include_js = "/assets/farm_advisory/js/farm_advisory.js"
+app_include_js = "/assets/farm_advisory/js/farm_advisory.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/farm_advisory/css/farm_advisory.css"
@@ -87,16 +89,18 @@ app_license = "mit"
 # ----------
 
 # add methods and filters to jinja environment
-# jinja = {
-# 	"methods": "farm_advisory.utils.jinja_methods",
-# 	"filters": "farm_advisory.utils.jinja_filters"
-# }
+jinja = {
+	"methods": [
+		"farm_advisory.utils.report.fa_spray_context",
+		"farm_advisory.utils.report.fa_basal_context",
+	],
+}
 
 # Installation
 # ------------
 
 # before_install = "farm_advisory.install.before_install"
-# after_install = "farm_advisory.install.after_install"
+after_install = "farm_advisory.setup.install.after_install"
 
 # Uninstallation
 # ------------
@@ -191,7 +195,7 @@ app_license = "mit"
 # Testing
 # -------
 
-# before_tests = "farm_advisory.install.before_tests"
+before_tests = "farm_advisory.setup.install.setup"
 
 # Extend DocType Class
 # ------------------------------
@@ -276,4 +280,3 @@ app_license = "mit"
 # ------------
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
-

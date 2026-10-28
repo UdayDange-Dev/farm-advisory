@@ -1,0 +1,186 @@
+{
+ "actions": [],
+ "creation": "2026-10-23 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "spray_no",
+  "category",
+  "product",
+  "product_name",
+  "product_name_mr",
+  "cb1",
+  "dose",
+  "dose_unit",
+  "rate",
+  "result_section",
+  "total_qty",
+  "base_unit",
+  "total_qty_big",
+  "big_unit",
+  "cb2",
+  "per_tank_qty",
+  "pack_suggestion",
+  "pack_total_qty",
+  "cb3",
+  "amount",
+  "pack_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "spray_no",
+   "fieldtype": "Int",
+   "label": "Spray No.",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Select",
+   "label": "Category",
+   "options": "Insecticides\nBiopesticides\nFungicides\nBio fungicides\nHerbicides\nSprayers & adjuvants",
+   "reqd": 1,
+   "default": "Insecticides",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "product",
+   "fieldtype": "Link",
+   "label": "Product",
+   "options": "Spray Product",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "product_name",
+   "fieldtype": "Data",
+   "label": "Product Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "product_name_mr",
+   "fieldtype": "Data",
+   "label": "Product Name (Marathi)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dose",
+   "fieldtype": "Float",
+   "label": "Dose",
+   "in_list_view": 1,
+   "non_negative": 1,
+   "columns": 1,
+   "description": "Per litre of water (ml/L or gm/L); ppm = mg per litre."
+  },
+  {
+   "fieldname": "dose_unit",
+   "fieldtype": "Select",
+   "label": "Dose Unit",
+   "options": "ml / L\ngm / L\nppm (mg/L)",
+   "default": "ml / L",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Rate ₹ per L / kg",
+   "in_list_view": 1,
+   "non_negative": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "result_section",
+   "fieldtype": "Section Break",
+   "label": "Calculated"
+  },
+  {
+   "fieldname": "total_qty",
+   "fieldtype": "Float",
+   "label": "Total Required",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 1,
+   "precision": "1"
+  },
+  {
+   "fieldname": "base_unit",
+   "fieldtype": "Data",
+   "label": "Unit",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_qty_big",
+   "fieldtype": "Float",
+   "label": "Total Required (L / kg)",
+   "read_only": 1,
+   "precision": "3"
+  },
+  {
+   "fieldname": "big_unit",
+   "fieldtype": "Data",
+   "label": "Big Unit",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "per_tank_qty",
+   "fieldtype": "Float",
+   "label": "Per Tank",
+   "read_only": 1,
+   "precision": "1"
+  },
+  {
+   "fieldname": "pack_suggestion",
+   "fieldtype": "Data",
+   "label": "Pack Suggestion",
+   "read_only": 1
+  },
+  {
+   "fieldname": "pack_total_qty",
+   "fieldtype": "Float",
+   "label": "Pack Total (ml / gm)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "pack_amount",
+   "fieldtype": "Currency",
+   "label": "Value at Full Packs",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-23 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Farm Advisory",
+ "name": "Spray Schedule Product",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1,
+ "editable_grid": 1
+}

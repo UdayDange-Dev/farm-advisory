@@ -38,6 +38,7 @@ select = [
     "RUF",
 ]
 ignore = [
+    "RUF001", "RUF002", "RUF003", # ×, – and Marathi text are deliberate (report output)
     "B017", # assertRaises(Exception) - should be more specific
     "B018", # useless expression, not assigned to anything
     "B023", # function doesn't bind loop variable - will have last iteration's value

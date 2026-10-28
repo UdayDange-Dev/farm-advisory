@@ -1,0 +1,155 @@
+{
+ "actions": [],
+ "creation": "2026-10-23 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "crop_no",
+  "fertilizer",
+  "fertilizer_name",
+  "pack_kg",
+  "contains",
+  "cb1",
+  "rate",
+  "rate_unit",
+  "cost_per_bag",
+  "result_section",
+  "rate_gm",
+  "qty_kg",
+  "bags",
+  "cb2",
+  "cost_per_kg",
+  "amount",
+  "cost_per_plant"
+ ],
+ "fields": [
+  {
+   "fieldname": "crop_no",
+   "fieldtype": "Int",
+   "label": "Crop No.",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "fertilizer",
+   "fieldtype": "Link",
+   "label": "Fertilizer",
+   "options": "Farm Fertilizer",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "fertilizer_name",
+   "fieldtype": "Data",
+   "label": "Fertilizer Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "pack_kg",
+   "fieldtype": "Float",
+   "label": "Pack (kg)",
+   "non_negative": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "contains",
+   "fieldtype": "Data",
+   "label": "Contains"
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Float",
+   "label": "Rate",
+   "non_negative": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "rate_unit",
+   "fieldtype": "Select",
+   "label": "Unit",
+   "options": "gm / plant\nkg / plant",
+   "default": "gm / plant",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "cost_per_bag",
+   "fieldtype": "Currency",
+   "label": "Cost / Bag ₹",
+   "non_negative": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "result_section",
+   "fieldtype": "Section Break",
+   "label": "Calculated"
+  },
+  {
+   "fieldname": "rate_gm",
+   "fieldtype": "Float",
+   "label": "Rate (gm / plant)",
+   "read_only": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "qty_kg",
+   "fieldtype": "Float",
+   "label": "Total Qty (kg)",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "bags",
+   "fieldtype": "Float",
+   "label": "Bags",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cost_per_kg",
+   "fieldtype": "Currency",
+   "label": "₹ / kg",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Total ₹",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "cost_per_plant",
+   "fieldtype": "Currency",
+   "label": "₹ / plant",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-23 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Farm Advisory",
+ "name": "Basal Dose Fertilizer",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1,
+ "editable_grid": 1
+}

@@ -1,0 +1,109 @@
+{
+ "actions": [],
+ "creation": "2026-10-23 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "fertilizer_name",
+  "pack_kg",
+  "contains",
+  "cb1",
+  "cost_per_bag",
+  "item",
+  "is_active"
+ ],
+ "fields": [
+  {
+   "fieldname": "fertilizer_name",
+   "fieldtype": "Data",
+   "label": "Fertilizer Name",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "description": "Stored in capitals, as in the reference calculator."
+  },
+  {
+   "fieldname": "pack_kg",
+   "fieldtype": "Float",
+   "label": "Pack Size (kg)",
+   "reqd": 1,
+   "non_negative": 1,
+   "in_list_view": 1,
+   "default": "25"
+  },
+  {
+   "fieldname": "contains",
+   "fieldtype": "Data",
+   "label": "Contains",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cost_per_bag",
+   "fieldtype": "Currency",
+   "label": "Price per Bag",
+   "non_negative": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "label": "ERPNext Item",
+   "options": "Item"
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Active",
+   "default": "1"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-23 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Farm Advisory",
+ "name": "Farm Fertilizer",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "Farm Advisory Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "Farm Advisor",
+   "create": 1,
+   "read": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "field:fertilizer_name",
+ "quick_entry": 1,
+ "search_fields": "contains",
+ "allow_rename": 1
+}

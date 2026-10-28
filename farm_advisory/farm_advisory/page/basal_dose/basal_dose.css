@@ -1,0 +1,508 @@
+/* Basal Dose page. Every rule is scoped to .fa-bd-page. Colours, type sizes,
+   radii and shadows come from the desk's own variables, so the page follows
+   the light and dark desk themes; green is the only accent. No fixed heights:
+   every block is as tall as its content. */
+.fa-bd-page {
+	--fa-accent: var(--green-600, #2f7a4b);
+	--fa-accent-soft: var(--green-50, #eef7f1);
+	--fa-radius: var(--border-radius-md, 8px);
+	--fa-gap: 16px;
+	--fa-pad: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: var(--fa-gap);
+	padding: 4px 0 32px;
+	color: var(--text-color);
+}
+.fa-bd-page .r {
+	text-align: right;
+}
+.fa-bd-page .nowrap {
+	white-space: nowrap;
+}
+.fa-bd-page .num {
+	font-variant-numeric: tabular-nums;
+}
+.fa-bd-page .fa-strong {
+	font-weight: 600;
+	color: var(--heading-color, var(--text-color));
+}
+.fa-bd-page .fa-muted {
+	color: var(--text-muted);
+	font-size: var(--text-sm, 12px);
+}
+.fa-bd-page .btn .icon {
+	margin-right: 4px;
+	vertical-align: -2px;
+}
+.fa-bd-page :focus-visible {
+	outline: 2px solid var(--fa-accent);
+	outline-offset: 2px;
+}
+
+/* ── summary figures ─────────────────────────────────────────────── */
+.fa-bd-page .fa-kpis {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	gap: 12px;
+}
+.fa-bd-page .fa-kpi {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 6px;
+	min-width: 0;
+	padding: 14px 16px;
+	background: var(--card-bg, var(--fg-color));
+	border: 1px solid var(--border-color);
+	border-top: 3px solid var(--fa-accent);
+	border-radius: var(--fa-radius);
+	box-shadow: var(--shadow-xs, none);
+}
+.fa-bd-page .fa-kpi-label {
+	color: var(--text-muted);
+	font-size: var(--text-sm, 12px);
+	font-weight: 500;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.fa-bd-page .fa-kpi-value {
+	color: var(--heading-color, var(--text-color));
+	font-size: var(--text-2xl, 22px);
+	font-weight: 600;
+	line-height: 1.2;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* ── panels ──────────────────────────────────────────────────────── */
+.fa-bd-page .fa-panel {
+	min-width: 0;
+	background: var(--card-bg, var(--fg-color));
+	border: 1px solid var(--border-color);
+	border-radius: var(--fa-radius);
+	box-shadow: var(--shadow-xs, none);
+	overflow: hidden;
+}
+.fa-bd-page .fa-panel-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 12px var(--fa-pad);
+	border-bottom: 1px solid var(--border-color);
+}
+.fa-bd-page .fa-panel-title {
+	margin: 0;
+	font-size: var(--text-md, 14px);
+	font-weight: 600;
+	line-height: 1.4;
+	color: var(--heading-color, var(--text-color));
+}
+.fa-bd-page .fa-panel-sub {
+	color: var(--text-muted);
+	font-size: var(--text-xs, 11px);
+	margin-top: 1px;
+}
+.fa-bd-page .fa-panel-head .btn-link {
+	flex: 0 0 auto;
+	color: var(--fa-accent);
+	font-weight: 500;
+	padding: 2px 4px;
+}
+.fa-bd-page .fa-bottom {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--fa-gap);
+	/* panels keep their own height: a short list is not stretched to match a long one */
+	align-items: start;
+}
+
+/* ── crop tabs ───────────────────────────────────────────────────── */
+.fa-bd-page .fa-tabs {
+	display: flex;
+	gap: 4px;
+	padding: 0 8px;
+	overflow-x: auto;
+	border-bottom: 1px solid var(--border-color);
+	scrollbar-width: none;
+}
+.fa-bd-page .fa-tabs::-webkit-scrollbar {
+	display: none;
+}
+.fa-bd-page .fa-tab {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	flex: 0 0 auto;
+	margin-bottom: -1px;
+	padding: 12px 12px 11px;
+	background: none;
+	border: 0;
+	border-bottom: 2px solid transparent;
+	color: var(--text-muted);
+	font-size: var(--text-md, 14px);
+	font-weight: 500;
+	line-height: 1.2;
+	white-space: nowrap;
+	cursor: pointer;
+}
+.fa-bd-page .fa-tab:hover {
+	color: var(--heading-color, var(--text-color));
+}
+.fa-bd-page .fa-tab.active {
+	color: var(--heading-color, var(--text-color));
+	border-bottom-color: var(--fa-accent);
+	font-weight: 600;
+}
+.fa-bd-page .fa-tab:focus-visible {
+	outline-offset: -4px;
+	border-radius: 6px 6px 0 0;
+}
+.fa-bd-page .fa-count {
+	min-width: 22px;
+	padding: 1px 7px;
+	border-radius: 999px;
+	background: var(--control-bg, var(--gray-100));
+	color: var(--text-muted);
+	font-size: var(--text-xs, 11px);
+	font-weight: 600;
+	line-height: 16px;
+	text-align: center;
+	font-variant-numeric: tabular-nums;
+}
+.fa-bd-page .fa-tab.active .fa-count {
+	background: var(--fa-accent-soft);
+	color: var(--fa-accent);
+}
+
+/* ── toolbar: row one filters, row two results and actions ──────── */
+.fa-bd-page .fa-toolbar {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 14px var(--fa-pad) 12px;
+	border-bottom: 1px solid var(--border-color);
+}
+.fa-bd-page .fa-filters {
+	display: grid;
+	grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.3fr);
+	gap: 8px;
+}
+.fa-bd-page .fa-filter {
+	min-width: 0;
+}
+.fa-bd-page .fa-filter .frappe-control,
+.fa-bd-page .fa-filter .form-group {
+	margin: 0;
+}
+/* the placeholder is the label here; drop the empty label and help rows */
+.fa-bd-page .fa-filter .control-label,
+.fa-bd-page .fa-filter .help-box {
+	display: none;
+}
+.fa-bd-page .fa-resultbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px 16px;
+}
+.fa-bd-page .fa-result-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 28px;
+	color: var(--text-muted);
+	font-size: var(--text-sm, 13px);
+}
+.fa-bd-page .fa-result-count {
+	color: var(--heading-color, var(--text-color));
+	font-weight: 500;
+}
+.fa-bd-page .fa-result-info .btn-link {
+	padding: 0 4px;
+	color: var(--fa-accent);
+}
+.fa-bd-page .fa-toolbar-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+/* ── tables ──────────────────────────────────────────────────────── */
+.fa-bd-page .fa-table-wrap {
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+.fa-bd-page .fa-table {
+	width: 100%;
+	margin: 0;
+	border-collapse: collapse;
+	font-size: var(--text-sm, 13px);
+}
+.fa-bd-page .fa-table th {
+	padding: 9px 12px;
+	background: var(--subtle-fg, var(--control-bg));
+	border-bottom: 1px solid var(--border-color);
+	color: var(--text-muted);
+	font-size: var(--text-xs, 12px);
+	font-weight: 600;
+	text-align: left;
+	white-space: nowrap;
+}
+.fa-bd-page .fa-table td {
+	padding: 10px 12px;
+	border-bottom: 1px solid var(--border-color);
+	vertical-align: top;
+	line-height: 1.45;
+}
+.fa-bd-page .fa-table tbody tr:last-child td {
+	border-bottom: 0;
+}
+.fa-bd-page .fa-table tbody tr:hover {
+	background: var(--subtle-fg, var(--control-bg));
+}
+.fa-bd-page .fa-table th:first-child,
+.fa-bd-page .fa-table td:first-child {
+	padding-left: var(--fa-pad);
+}
+.fa-bd-page .fa-table th:last-child,
+.fa-bd-page .fa-table td:last-child {
+	padding-right: var(--fa-pad);
+}
+.fa-bd-page .fa-table th.r,
+.fa-bd-page .fa-table td.r {
+	text-align: right;
+}
+.fa-bd-page .fa-c-id a {
+	font-weight: 500;
+	white-space: nowrap;
+}
+.fa-bd-page .fa-c-farmer {
+	min-width: 160px;
+}
+.fa-bd-page .fa-pager {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	padding: 10px var(--fa-pad);
+	border-top: 1px solid var(--border-color);
+	font-size: var(--text-sm, 13px);
+}
+.fa-bd-page .fa-pager:empty {
+	display: none;
+}
+.fa-bd-page .fa-pager-buttons {
+	display: flex;
+	gap: 6px;
+}
+
+/* ── empty state: compact, centred, as tall as its content ───────── */
+.fa-bd-page .fa-empty {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	padding: 32px var(--fa-pad);
+	text-align: center;
+}
+.fa-bd-page .fa-empty-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	margin-bottom: 4px;
+	border-radius: 50%;
+	background: var(--fa-accent-soft);
+	color: var(--fa-accent);
+}
+.fa-bd-page .fa-empty-icon .icon {
+	stroke: currentColor;
+}
+.fa-bd-page .fa-empty-title {
+	color: var(--heading-color, var(--text-color));
+	font-size: var(--text-md, 14px);
+	font-weight: 600;
+}
+.fa-bd-page .fa-empty-hint {
+	max-width: 440px;
+	color: var(--text-muted);
+	font-size: var(--text-sm, 13px);
+}
+.fa-bd-page .fa-empty-action {
+	margin-top: 8px;
+}
+.fa-bd-page .fa-empty-compact {
+	padding: 20px var(--fa-pad);
+}
+.fa-bd-page .fa-empty-compact .fa-empty-icon {
+	width: 32px;
+	height: 32px;
+}
+
+/* ── fertilizer templates ────────────────────────────────────────── */
+.fa-bd-page .fa-tpl-toolbar {
+	display: grid;
+	grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+	gap: 8px;
+	padding: 12px var(--fa-pad);
+	border-bottom: 1px solid var(--border-color);
+}
+.fa-bd-page .fa-pill {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 999px;
+	font-size: var(--text-xs, 11px);
+	font-weight: 600;
+	white-space: nowrap;
+}
+.fa-bd-page .fa-pill-ok {
+	background: var(--fa-accent-soft);
+	color: var(--fa-accent);
+}
+.fa-bd-page .fa-pill-missing {
+	background: var(--yellow-50, #fff7e0);
+	color: var(--yellow-700, #8a5a00);
+}
+.fa-bd-page .fa-tpl-actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: 6px;
+}
+.fa-bd-page .fa-panel-head .btn-primary .icon {
+	stroke: currentColor;
+}
+
+/* ── responsive ──────────────────────────────────────────────────── */
+/* The breakpoints measure the page's own width (container queries), not the
+   window, because the desk sidebar takes a varying share of the window. */
+.fa-bd-shell {
+	container: fa-bd / inline-size;
+	padding: 0 16px;
+}
+@media (max-width: 575px) {
+	.fa-bd-shell {
+		padding: 0 12px;
+	}
+}
+
+@container fa-bd (max-width: 999px) {
+	.fa-bd-page .fa-kpis {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+	/* five cards in three columns: the total takes the rest of the second row */
+	.fa-bd-page .fa-kpi:last-child {
+		grid-column: span 2;
+	}
+	.fa-bd-page .fa-bottom {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	.fa-bd-page .fa-filters {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+	.fa-bd-page .fa-filter-search {
+		grid-column: 1 / -1;
+	}
+}
+
+/* the crop table becomes one compact card per record */
+@container fa-bd (max-width: 799px) {
+	.fa-bd-page .fa-table-stack thead {
+		display: none;
+	}
+	.fa-bd-page .fa-table-stack,
+	.fa-bd-page .fa-table-stack tbody {
+		display: block;
+		width: 100%;
+	}
+	.fa-bd-page .fa-table-stack tr {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+		gap: 10px 16px;
+		padding: 12px var(--fa-pad);
+		border-bottom: 1px solid var(--border-color);
+	}
+	.fa-bd-page .fa-table-stack tbody tr:last-child {
+		border-bottom: 0;
+	}
+	.fa-bd-page .fa-table-stack tbody tr:hover {
+		background: none;
+	}
+	.fa-bd-page .fa-table-stack td,
+	.fa-bd-page .fa-table-stack td.r,
+	.fa-bd-page .fa-table-stack td:first-child,
+	.fa-bd-page .fa-table-stack td:last-child {
+		display: block;
+		min-width: 0;
+		padding: 0;
+		border: 0;
+		text-align: left;
+		white-space: normal;
+	}
+	.fa-bd-page .fa-table-stack td::before {
+		content: attr(data-label);
+		display: block;
+		margin-bottom: 1px;
+		color: var(--text-muted);
+		font-size: var(--text-xs, 11px);
+		font-weight: 500;
+	}
+	/* the record and farmer head the card */
+	.fa-bd-page .fa-table-stack .fa-c-id,
+	.fa-bd-page .fa-table-stack .fa-c-farmer {
+		grid-column: span 2;
+	}
+}
+
+@container fa-bd (max-width: 559px) {
+	.fa-bd-page {
+		--fa-gap: 12px;
+		--fa-pad: 12px;
+	}
+	.fa-bd-page .fa-kpis {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+	.fa-bd-page .fa-kpi:last-child {
+		grid-column: 1 / -1;
+	}
+	.fa-bd-page .fa-kpi {
+		padding: 12px;
+	}
+	.fa-bd-page .fa-kpi-label {
+		font-size: var(--text-xs, 11px);
+	}
+	.fa-bd-page .fa-kpi-value {
+		font-size: var(--text-xl, 18px);
+	}
+	.fa-bd-page .fa-filters {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+	.fa-bd-page .fa-filter-village {
+		grid-column: 1 / -1;
+	}
+	.fa-bd-page .fa-toolbar-actions {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		width: 100%;
+	}
+	.fa-bd-page .fa-table-stack tr {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@container fa-bd (max-width: 799px) {
+	.fa-bd-page .fa-tpl-toolbar {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	.fa-bd-page .fa-tpl-actions {
+		justify-content: flex-start;
+	}
+}

@@ -1,0 +1,165 @@
+{
+ "actions": [],
+ "creation": "2026-10-23 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "crop_no",
+  "crop",
+  "variety",
+  "row_spacing",
+  "plant_spacing",
+  "spacing_unit",
+  "cb1",
+  "area",
+  "area_unit",
+  "plant_count",
+  "plants_manual",
+  "totals_section",
+  "dose_gm_per_plant",
+  "total_qty_kg",
+  "cb2",
+  "total_bags",
+  "total_cost",
+  "cost_per_plant"
+ ],
+ "fields": [
+  {
+   "fieldname": "crop_no",
+   "fieldtype": "Int",
+   "label": "Crop No.",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "crop",
+   "fieldtype": "Link",
+   "label": "Crop",
+   "options": "Farm Crop",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "variety",
+   "fieldtype": "Link",
+   "label": "Variety",
+   "options": "Farm Crop Variety",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "row_spacing",
+   "fieldtype": "Float",
+   "label": "Row Spacing",
+   "non_negative": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "plant_spacing",
+   "fieldtype": "Float",
+   "label": "Plant Spacing",
+   "non_negative": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "spacing_unit",
+   "fieldtype": "Select",
+   "label": "Spacing Unit",
+   "options": "Feet\nMetre",
+   "default": "Feet",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "area",
+   "fieldtype": "Float",
+   "label": "Area",
+   "default": "1",
+   "non_negative": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "area_unit",
+   "fieldtype": "Select",
+   "label": "Area Unit",
+   "options": "Acre\nHectare\nGuntha",
+   "default": "Acre",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "plant_count",
+   "fieldtype": "Int",
+   "label": "No. of Plants",
+   "non_negative": 1,
+   "in_list_view": 1,
+   "columns": 1,
+   "description": "Auto from area and spacing; typing a number switches to manual."
+  },
+  {
+   "fieldname": "plants_manual",
+   "fieldtype": "Check",
+   "label": "Plant count entered manually"
+  },
+  {
+   "fieldname": "totals_section",
+   "fieldtype": "Section Break",
+   "label": "Crop Totals"
+  },
+  {
+   "fieldname": "dose_gm_per_plant",
+   "fieldtype": "Float",
+   "label": "Dose per Plant (gm)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_qty_kg",
+   "fieldtype": "Float",
+   "label": "Total Fertilizer Qty (kg)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_bags",
+   "fieldtype": "Float",
+   "label": "Total Bags",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_cost",
+   "fieldtype": "Currency",
+   "label": "Total Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cost_per_plant",
+   "fieldtype": "Currency",
+   "label": "Cost per Plant",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-23 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Farm Advisory",
+ "name": "Basal Dose Crop",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1,
+ "editable_grid": 1
+}

@@ -1,0 +1,331 @@
+{
+ "actions": [],
+ "creation": "2026-10-23 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "farmer_tab",
+  "naming_series",
+  "posting_date",
+  "header_cb",
+  "bag_rounding",
+  "farmer_section",
+  "customer",
+  "first_name",
+  "middle_name",
+  "last_name",
+  "farmer_name",
+  "farmer_cb1",
+  "village",
+  "taluka",
+  "district",
+  "state",
+  "pin_code",
+  "farmer_cb2",
+  "mobile_no",
+  "whatsapp_same_as_mobile",
+  "whatsapp_no",
+  "email_id",
+  "crops_tab",
+  "crop_cards_section",
+  "crop_cards",
+  "crops_section",
+  "crops",
+  "fertilizers_section",
+  "fertilizers",
+  "summary_section",
+  "total_plants",
+  "summary_cb",
+  "total_qty_kg",
+  "summary_cb2",
+  "grand_total",
+  "purchase_section",
+  "purchase_items"
+ ],
+ "fields": [
+  {
+   "fieldname": "farmer_tab",
+   "fieldtype": "Tab Break",
+   "label": "Farmer"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "BDR-.YYYY.-",
+   "default": "BDR-.YYYY.-",
+   "reqd": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "default": "Today",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "header_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "bag_rounding",
+   "fieldtype": "Select",
+   "label": "Bag Quantity Rounding",
+   "options": "Round up (full bags)\nNearest bag (like Excel)\nNo rounding (exact)",
+   "default": "Round up (full bags)"
+  },
+  {
+   "fieldname": "farmer_section",
+   "fieldtype": "Section Break",
+   "label": "Farmer Details"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Farmer (Customer)",
+   "options": "Customer",
+   "reqd": 1,
+   "in_standard_filter": 1,
+   "description": "Select the farmer's Customer record, or fill the farmer details and use Create Customer."
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "First Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "middle_name",
+   "fieldtype": "Data",
+   "label": "Middle Name"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "farmer_name",
+   "fieldtype": "Data",
+   "label": "Farmer Name",
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_global_search": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "farmer_cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "village",
+   "fieldtype": "Link",
+   "label": "Village",
+   "options": "Farm Village",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "taluka",
+   "fieldtype": "Link",
+   "label": "Taluka",
+   "options": "Farm Taluka",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "district",
+   "fieldtype": "Link",
+   "label": "District",
+   "options": "Farm District"
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Link",
+   "label": "State",
+   "options": "Farm State",
+   "default": "Maharashtra"
+  },
+  {
+   "fieldname": "pin_code",
+   "fieldtype": "Data",
+   "label": "PIN Code",
+   "length": 6
+  },
+  {
+   "fieldname": "farmer_cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "mobile_no",
+   "fieldtype": "Data",
+   "label": "Mobile Number",
+   "options": "Phone",
+   "in_list_view": 1,
+   "length": 10
+  },
+  {
+   "fieldname": "whatsapp_same_as_mobile",
+   "fieldtype": "Check",
+   "label": "WhatsApp same as mobile number",
+   "default": "1"
+  },
+  {
+   "fieldname": "whatsapp_no",
+   "fieldtype": "Data",
+   "label": "WhatsApp Number",
+   "options": "Phone",
+   "length": 10,
+   "read_only_depends_on": "eval:doc.whatsapp_same_as_mobile"
+  },
+  {
+   "fieldname": "email_id",
+   "fieldtype": "Data",
+   "label": "Email ID",
+   "options": "Email"
+  },
+  {
+   "fieldname": "crops_tab",
+   "fieldtype": "Tab Break",
+   "label": "Crops & Fertilizers"
+  },
+  {
+   "fieldname": "crop_cards_section",
+   "fieldtype": "Section Break",
+   "label": "Crop Recommendations",
+   "description": "Each crop is calculated on its own: its area, plant count and fertilizer rows never change another crop."
+  },
+  {
+   "fieldname": "crop_cards",
+   "fieldtype": "HTML",
+   "label": "Crop Recommendations"
+  },
+  {
+   "fieldname": "crops_section",
+   "fieldtype": "Section Break",
+   "label": "Crops",
+   "description": "One row per crop. Choosing a crop loads its default spacing and fertilizer template.",
+   "hidden": 1
+  },
+  {
+   "fieldname": "crops",
+   "fieldtype": "Table",
+   "label": "Crops",
+   "options": "Basal Dose Crop"
+  },
+  {
+   "fieldname": "fertilizers_section",
+   "fieldtype": "Section Break",
+   "label": "Fertilizers",
+   "description": "Doses, packings, contents and bag prices come pre-filled from the Besal Dose Excel (Mango, Pomegranate, Papaya). All values stay editable. Banana & Guava start blank – use Load Template or add rows.",
+   "hidden": 1
+  },
+  {
+   "fieldname": "fertilizers",
+   "fieldtype": "Table",
+   "label": "Fertilizers",
+   "options": "Basal Dose Fertilizer"
+  },
+  {
+   "fieldname": "summary_section",
+   "fieldtype": "Section Break",
+   "label": "Summary",
+   "hidden": 1
+  },
+  {
+   "fieldname": "total_plants",
+   "fieldtype": "Float",
+   "label": "Total Plants",
+   "read_only": 1,
+   "precision": "0"
+  },
+  {
+   "fieldname": "summary_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_qty_kg",
+   "fieldtype": "Float",
+   "label": "Total Fertilizer Qty (kg)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "summary_cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "label": "Grand Total",
+   "read_only": 1,
+   "bold": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "purchase_section",
+   "fieldtype": "Section Break",
+   "label": "Purchase List (all crops combined)",
+   "collapsible": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "purchase_items",
+   "fieldtype": "Table",
+   "label": "Purchase List",
+   "options": "Basal Dose Purchase Item",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-28 15:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Farm Advisory",
+ "name": "Basal Dose Recommendation",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "Farm Advisory Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "Farm Advisor",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "naming_series:",
+ "title_field": "farmer_name",
+ "search_fields": "farmer_name,mobile_no",
+ "show_title_field_in_link": 1,
+ "track_changes": 1,
+ "default_print_format": "Basal Dose Recommendation Report"
+}

@@ -1,0 +1,133 @@
+{
+ "actions": [],
+ "creation": "2026-10-23 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "report_section",
+  "company_name",
+  "report_email",
+  "report_tagline",
+  "report_cb",
+  "report_logo",
+  "default_branch",
+  "defaults_section",
+  "default_report_language",
+  "default_bag_rounding",
+  "defaults_cb",
+  "customer_group",
+  "territory"
+ ],
+ "fields": [
+  {
+   "fieldname": "report_section",
+   "fieldtype": "Section Break",
+   "label": "Report Header"
+  },
+  {
+   "fieldname": "company_name",
+   "fieldtype": "Data",
+   "label": "Company Name",
+   "default": "AGRI SMART FARM SOLUTIONS LLP",
+   "reqd": 1
+  },
+  {
+   "fieldname": "report_email",
+   "fieldtype": "Data",
+   "label": "Report Email",
+   "options": "Email",
+   "default": "agrismartfarmsolutionsllp@gmail.com"
+  },
+  {
+   "fieldname": "report_tagline",
+   "fieldtype": "Data",
+   "label": "Report Footer Tagline",
+   "default": "Agri Smart – a smart way of farming"
+  },
+  {
+   "fieldname": "report_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "report_logo",
+   "fieldtype": "Attach Image",
+   "label": "Report Logo",
+   "description": "Leave blank to use the bundled Agri Smart logo."
+  },
+  {
+   "fieldname": "default_branch",
+   "fieldtype": "Link",
+   "label": "Default Branch",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "defaults_section",
+   "fieldtype": "Section Break",
+   "label": "Calculator Defaults"
+  },
+  {
+   "fieldname": "default_report_language",
+   "fieldtype": "Select",
+   "label": "Default Spray Report Language",
+   "options": "English + Marathi\nEnglish\nMarathi",
+   "default": "English + Marathi"
+  },
+  {
+   "fieldname": "default_bag_rounding",
+   "fieldtype": "Select",
+   "label": "Default Bag Rounding",
+   "options": "Round up (full bags)\nNearest bag (like Excel)\nNo rounding (exact)",
+   "default": "Round up (full bags)"
+  },
+  {
+   "fieldname": "defaults_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer_group",
+   "fieldtype": "Link",
+   "label": "Customer Group for New Farmers",
+   "options": "Customer Group"
+  },
+  {
+   "fieldname": "territory",
+   "fieldtype": "Link",
+   "label": "Territory for New Farmers",
+   "options": "Territory"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-23 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Farm Advisory",
+ "name": "Farm Advisory Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Farm Advisory Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Farm Advisor",
+   "read": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "issingle": 1
+}

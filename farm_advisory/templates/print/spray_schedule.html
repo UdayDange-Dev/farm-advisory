@@ -1,0 +1,91 @@
+{#- Spray Schedule report. Context: r = fa_spray_context(doc).
+    Layout and styles follow reportHTML() in Spray_Schedule_Calculator.html. -#}
+<style>
+.fa-rpt{--g9:#124a1f;--g7:#1e6b2e;--g1:#e8f4ea;--y:#f6c026;background:#fff;color:#111;
+  font-family:'Noto Sans','Noto Sans Devanagari','Nirmala UI','Mangal','Segoe UI',Arial,sans-serif;
+  font-size:12px;line-height:1.35;max-width:794px;margin:0 auto}
+.fa-rpt *{box-sizing:border-box}
+.fa-rpt .hd{display:flex;gap:14px;align-items:center;border-bottom:3px solid var(--g7);padding-bottom:10px}
+.fa-rpt .hd img{height:68px;width:auto}
+.fa-rpt .hd .co{flex:1}
+.fa-rpt .hd .co b{font-size:17px;color:var(--g9);display:block;letter-spacing:.2px}
+.fa-rpt .hd .co span{display:block;font-size:11px;color:#333}
+.fa-rpt .ttl{text-align:center;font-size:16px;font-weight:800;margin:10px 0 8px;color:var(--g9);
+  background:var(--g1);padding:6px;border-radius:6px}
+.fa-rpt .box{border:1px solid #9db8a3;border-radius:6px;margin-bottom:8px;overflow:hidden}
+.fa-rpt .box h4{margin:0;background:var(--g7);color:#fff;font-size:11.5px;padding:3px 8px}
+.fa-rpt .kv{display:grid;grid-template-columns:1fr 1fr 1fr}
+.fa-rpt .kv div{padding:4px 8px;border-bottom:1px solid #e3ece5;border-right:1px solid #e3ece5;font-size:11.5px}
+.fa-rpt .kv div.w2{grid-column:span 2}.fa-rpt .kv div.w3{grid-column:span 3}
+.fa-rpt .kv small{display:block;color:#5a6a5e;font-size:10px}
+.fa-rpt .kv b{font-size:12px}
+.fa-rpt table{width:100%;border-collapse:collapse;font-size:11px}
+.fa-rpt th{background:var(--g1);border:1px solid #9db8a3;padding:4px;text-align:left;font-size:10.5px}
+.fa-rpt td{border:1px solid #c5d6c9;padding:4px;vertical-align:top}
+.fa-rpt td.r,.fa-rpt th.r{text-align:right}
+.fa-rpt .sh{display:flex;justify-content:space-between;background:#f6fbf6;border:1px solid #9db8a3;
+  border-bottom:0;border-radius:6px 6px 0 0;padding:4px 8px;font-weight:700;color:var(--g9)}
+.fa-rpt tr.st td{background:#f6fbf6;font-weight:700}
+.fa-rpt .gt{background:var(--g9);color:#fff;border-radius:6px;padding:7px 10px;display:flex;
+  justify-content:space-between;font-weight:700;font-size:13px;margin:8px 0}
+.fa-rpt .gt b{color:var(--y)}
+.fa-rpt .note{font-size:10px;color:#444;border-top:1px dashed #999;padding-top:6px;margin-top:6px}
+.fa-rpt .sig{display:flex;justify-content:space-between;margin-top:26px;font-size:11px}
+.fa-rpt .sig div{border-top:1px solid #333;padding-top:3px;min-width:170px;text-align:center}
+.fa-rpt .pk{display:block;color:#355;font-size:10px}
+.fa-rpt .foot{text-align:center;font-size:9.5px;color:#666;margin-top:8px}
+.fa-rpt .blk{margin-bottom:8px}
+.fa-rpt .empty{color:#666;font-style:italic;padding:6px 8px}
+@media print{.fa-rpt tr,.fa-rpt .box,.fa-rpt .gt{break-inside:avoid}
+  .fa-rpt thead{display:table-header-group}
+  .fa-rpt *{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+<div class="fa-rpt">
+  <div class="hd">
+    {% if r.logo %}<img src="{{ r.logo }}" alt="">{% endif %}
+    <div class="co">
+      <b>{{ r.company | e }}</b>
+      {% if r.branch %}
+        {% if r.branch.address %}<span>{{ r.branch.address | e }}</span>{% endif %}
+        <span>{{ r.L.phone }}: {{ r.branch.phone | e }}{% if r.email %}  |  {{ r.email | e }}{% endif %}</span>
+        <span><b style="font-size:11px;color:#124a1f">{{ r.branch.label | e }}</b></span>
+      {% elif r.email %}<span>{{ r.email | e }}</span>{% endif %}
+    </div>
+  </div>
+  <div class="ttl">{{ r.L.title }}</div>
+
+  <div class="box"><h4>{{ r.L.farmer }}</h4><div class="kv">
+    {% for k in r.farmer %}<div{% if k.cls %} class="{{ k.cls }}"{% endif %}><small>{{ k.label }}</small><b>{{ (k.value or "–") | e }}</b></div>{% endfor %}
+  </div></div>
+
+  <div class="box"><h4>{{ r.L.crop }}</h4><div class="kv">
+    {% for k in r.crop %}<div{% if k.cls %} class="{{ k.cls }}"{% endif %}><small>{{ k.label }}</small><b>{{ (k.value or "–") | e }}</b></div>{% endfor %}
+  </div></div>
+
+  {% for sp in r.sprays %}
+  <div class="blk">
+    <div class="sh"><span>{{ sp.title }}</span><span>{{ r.L.date }}: {{ sp.date }}</span></div>
+    <table>
+      <thead><tr><th>#</th><th>{{ r.L.category }}</th><th>{{ r.L.product }}</th><th class="r">{{ r.L.dose }}</th>
+        <th class="r">{{ r.L.total }}</th><th class="r">{{ r.L.tank }}</th><th>{{ r.L.packs }}</th>
+        <th class="r">{{ r.L.rate }}</th><th class="r">{{ r.L.amount }}</th></tr></thead>
+      <tbody>
+      {% for p in sp.rows %}
+        <tr><td>{{ p.no }}</td><td>{{ p.category | e }}</td><td><b>{{ p.product | e }}</b></td>
+          <td class="r">{{ p.dose }}</td><td class="r">{{ p.total }}<span class="pk">{{ p.total_big }}</span></td>
+          <td class="r">{{ p.tank }}</td><td>{{ p.packs }}</td><td class="r">{{ p.rate }}</td>
+          <td class="r"><b>{{ p.amount }}</b></td></tr>
+      {% else %}
+        <tr><td colspan="9" class="empty">–</td></tr>
+      {% endfor %}
+        <tr class="st"><td colspan="8" class="r">{{ r.L.spray_total }}</td><td class="r">{{ sp.total }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+  {% endfor %}
+
+  <div class="gt"><span>{{ r.L.grand }}</span><span><b>{{ r.grand }}</b></span></div>
+  <div class="note">{{ r.L.pack_value }}: <b>{{ r.grand_pack }}</b>. {{ r.L.disclaimer }}</div>
+  <div class="sig"><div>{{ r.L.sign_farmer }}</div><div>{{ r.L.sign_company }}</div></div>
+  <div class="foot">{{ r.L.generated }} {{ r.generated_on }}{% if r.doc_name %} • {{ r.doc_name }}{% endif %}{% if r.tagline %} • {{ r.tagline | e }}{% endif %}</div>
+</div>

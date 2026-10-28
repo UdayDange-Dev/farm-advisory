@@ -1,0 +1,130 @@
+{
+ "actions": [],
+ "creation": "2026-10-23 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "crop_name",
+  "crop_name_mr",
+  "cb1",
+  "used_in_spray",
+  "used_in_basal",
+  "spacing_section",
+  "default_row_spacing",
+  "cb2",
+  "default_plant_spacing",
+  "template_section",
+  "fertilizer_template"
+ ],
+ "fields": [
+  {
+   "fieldname": "crop_name",
+   "fieldtype": "Data",
+   "label": "Crop Name",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "crop_name_mr",
+   "fieldtype": "Data",
+   "label": "Crop Name (Marathi)",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "used_in_spray",
+   "fieldtype": "Check",
+   "label": "Show in Spray Schedule",
+   "default": "1",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "used_in_basal",
+   "fieldtype": "Check",
+   "label": "Show in Basal Dose",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "spacing_section",
+   "fieldtype": "Section Break",
+   "label": "Default Spacing (feet) for Basal Dose"
+  },
+  {
+   "fieldname": "default_row_spacing",
+   "fieldtype": "Float",
+   "label": "Row Spacing (ft)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "default_plant_spacing",
+   "fieldtype": "Float",
+   "label": "Plant Spacing (ft)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "template_section",
+   "fieldtype": "Section Break",
+   "label": "Basal Fertilizer Template",
+   "description": "Rows loaded into a Basal Dose Recommendation when this crop is chosen."
+  },
+  {
+   "fieldname": "fertilizer_template",
+   "fieldtype": "Table",
+   "label": "Fertilizer Template",
+   "options": "Farm Crop Fertilizer Template"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-23 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Farm Advisory",
+ "name": "Farm Crop",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "Farm Advisory Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "Farm Advisor",
+   "create": 1,
+   "read": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "field:crop_name",
+ "quick_entry": 0,
+ "search_fields": "crop_name_mr",
+ "allow_rename": 1
+}

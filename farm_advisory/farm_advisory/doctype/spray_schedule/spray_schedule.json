@@ -1,0 +1,549 @@
+{
+ "actions": [],
+ "creation": "2026-10-23 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "farmer_tab",
+  "naming_series",
+  "posting_date",
+  "branch",
+  "header_cb",
+  "report_language",
+  "farmer_section",
+  "customer",
+  "first_name",
+  "middle_name",
+  "last_name",
+  "farmer_name",
+  "farmer_cb1",
+  "village",
+  "taluka",
+  "district",
+  "state",
+  "pin_code",
+  "farmer_cb2",
+  "mobile_no",
+  "whatsapp_same_as_mobile",
+  "whatsapp_no",
+  "email_id",
+  "crop_tab",
+  "crop_section",
+  "crop",
+  "variety",
+  "plantation_date",
+  "crop_age",
+  "crop_age_days",
+  "crop_cb",
+  "bahar",
+  "bahar_date",
+  "bahar_age",
+  "bahar_age_days",
+  "area_section",
+  "area",
+  "area_unit",
+  "area_acre",
+  "area_sq_ft",
+  "area_cb",
+  "spacing_unit",
+  "row_spacing",
+  "plant_spacing",
+  "area_cb2",
+  "plant_count",
+  "plants_manual",
+  "water_section",
+  "water_basis",
+  "water_value",
+  "total_water",
+  "water_cb",
+  "spray_equipment",
+  "tank_capacity",
+  "water_cb2",
+  "tanks_required",
+  "tank_loads",
+  "spray_tab",
+  "sprays_section",
+  "sprays",
+  "products_section",
+  "products",
+  "totals_section",
+  "grand_total",
+  "totals_cb",
+  "grand_pack_total",
+  "report_tab",
+  "schedule_preview"
+ ],
+ "fields": [
+  {
+   "fieldname": "farmer_tab",
+   "fieldtype": "Tab Break",
+   "label": "Farmer"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "SPS-.YYYY.-",
+   "default": "SPS-.YYYY.-",
+   "reqd": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "default": "Today",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "header_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "report_language",
+   "fieldtype": "Select",
+   "label": "Language / भाषा",
+   "options": "English + Marathi\nEnglish\nMarathi",
+   "default": "English + Marathi",
+   "description": "Language of this form's labels, the report and the WhatsApp message."
+  },
+  {
+   "fieldname": "farmer_section",
+   "fieldtype": "Section Break",
+   "label": "Farmer Details"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Farmer (Customer)",
+   "options": "Customer",
+   "reqd": 1,
+   "in_standard_filter": 1,
+   "description": "Select the farmer's Customer record, or fill the farmer details and use Create Customer."
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "First Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "middle_name",
+   "fieldtype": "Data",
+   "label": "Middle Name"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "farmer_name",
+   "fieldtype": "Data",
+   "label": "Farmer Name",
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_global_search": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "farmer_cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "village",
+   "fieldtype": "Link",
+   "label": "Village",
+   "options": "Farm Village",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "taluka",
+   "fieldtype": "Link",
+   "label": "Taluka",
+   "options": "Farm Taluka",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "district",
+   "fieldtype": "Link",
+   "label": "District",
+   "options": "Farm District"
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Link",
+   "label": "State",
+   "options": "Farm State",
+   "default": "Maharashtra"
+  },
+  {
+   "fieldname": "pin_code",
+   "fieldtype": "Data",
+   "label": "PIN Code",
+   "length": 6
+  },
+  {
+   "fieldname": "farmer_cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "mobile_no",
+   "fieldtype": "Data",
+   "label": "Mobile Number",
+   "options": "Phone",
+   "in_list_view": 1,
+   "length": 10
+  },
+  {
+   "fieldname": "whatsapp_same_as_mobile",
+   "fieldtype": "Check",
+   "label": "WhatsApp same as mobile number",
+   "default": "1"
+  },
+  {
+   "fieldname": "whatsapp_no",
+   "fieldtype": "Data",
+   "label": "WhatsApp Number",
+   "options": "Phone",
+   "length": 10,
+   "read_only_depends_on": "eval:doc.whatsapp_same_as_mobile"
+  },
+  {
+   "fieldname": "email_id",
+   "fieldtype": "Data",
+   "label": "Email ID",
+   "options": "Email"
+  },
+  {
+   "fieldname": "crop_tab",
+   "fieldtype": "Tab Break",
+   "label": "Crop & Plot"
+  },
+  {
+   "fieldname": "crop_section",
+   "fieldtype": "Section Break",
+   "label": "Crop Details"
+  },
+  {
+   "fieldname": "crop",
+   "fieldtype": "Link",
+   "label": "Crop",
+   "options": "Farm Crop",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "variety",
+   "fieldtype": "Link",
+   "label": "Variety",
+   "options": "Farm Crop Variety"
+  },
+  {
+   "fieldname": "plantation_date",
+   "fieldtype": "Date",
+   "label": "Date of Plantation"
+  },
+  {
+   "fieldname": "crop_age",
+   "fieldtype": "Data",
+   "label": "Age of Crop",
+   "read_only": 1
+  },
+  {
+   "fieldname": "crop_age_days",
+   "fieldtype": "Int",
+   "label": "Crop Age (days)",
+   "read_only": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "crop_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "bahar",
+   "fieldtype": "Select",
+   "label": "Bahar / Pruning Treatment",
+   "options": "Not applicable\nAmbe Bahar\nMrig Bahar\nHasta Bahar\nFoundation pruning\nFruit pruning",
+   "default": "Not applicable"
+  },
+  {
+   "fieldname": "bahar_date",
+   "fieldtype": "Date",
+   "label": "Date of Bahar Treatment"
+  },
+  {
+   "fieldname": "bahar_age",
+   "fieldtype": "Data",
+   "label": "Days since Bahar Treatment",
+   "read_only": 1
+  },
+  {
+   "fieldname": "bahar_age_days",
+   "fieldtype": "Int",
+   "label": "Bahar Age (days)",
+   "read_only": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "area_section",
+   "fieldtype": "Section Break",
+   "label": "Area, Spacing & Water",
+   "description": "Plants = Area (sq ft) ÷ (row × plant spacing). Ages are counted up to the first spray date, or today."
+  },
+  {
+   "fieldname": "area",
+   "fieldtype": "Float",
+   "label": "Area",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "area_unit",
+   "fieldtype": "Select",
+   "label": "Area Unit",
+   "options": "Acre\nGuntha\nHectare",
+   "default": "Acre"
+  },
+  {
+   "fieldname": "area_acre",
+   "fieldtype": "Float",
+   "label": "Area (acre)",
+   "read_only": 1,
+   "precision": "4"
+  },
+  {
+   "fieldname": "area_sq_ft",
+   "fieldtype": "Float",
+   "label": "Area (sq ft)",
+   "read_only": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "area_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "spacing_unit",
+   "fieldtype": "Select",
+   "label": "Spacing Unit",
+   "options": "Feet\nMetre",
+   "default": "Feet"
+  },
+  {
+   "fieldname": "row_spacing",
+   "fieldtype": "Float",
+   "label": "Row Spacing",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "plant_spacing",
+   "fieldtype": "Float",
+   "label": "Plant Spacing",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "area_cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "plant_count",
+   "fieldtype": "Int",
+   "label": "No. of Plants (Area ÷ Spacing)",
+   "non_negative": 1,
+   "description": "Calculated automatically; typing a number switches to manual."
+  },
+  {
+   "fieldname": "plants_manual",
+   "fieldtype": "Check",
+   "label": "Plant count entered manually",
+   "description": "Untick to return to the automatic count."
+  },
+  {
+   "fieldname": "water_section",
+   "fieldtype": "Section Break",
+   "label": "Water & Spray Unit",
+   "description": "Tank capacity is editable – change it to match your machine."
+  },
+  {
+   "fieldname": "water_basis",
+   "fieldtype": "Select",
+   "label": "Water Required Basis",
+   "options": "Litres per acre\nLitres per plant\nTotal water (manual)",
+   "default": "Litres per acre"
+  },
+  {
+   "fieldname": "water_value",
+   "fieldtype": "Float",
+   "label": "Water Value",
+   "default": "200",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "total_water",
+   "fieldtype": "Float",
+   "label": "Total Water Required (L)",
+   "read_only": 1,
+   "precision": "1",
+   "bold": 1
+  },
+  {
+   "fieldname": "water_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "spray_equipment",
+   "fieldtype": "Link",
+   "label": "Spray Unit Type",
+   "options": "Spray Equipment",
+   "default": "HTP Pump"
+  },
+  {
+   "fieldname": "tank_capacity",
+   "fieldtype": "Float",
+   "label": "Tank Capacity (L)",
+   "default": "200",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "water_cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tanks_required",
+   "fieldtype": "Float",
+   "label": "Tanks Required",
+   "read_only": 1,
+   "precision": "1"
+  },
+  {
+   "fieldname": "tank_loads",
+   "fieldtype": "Int",
+   "label": "Tanks / Loads Needed",
+   "read_only": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "spray_tab",
+   "fieldtype": "Tab Break",
+   "label": "Spray Schedule"
+  },
+  {
+   "fieldname": "sprays_section",
+   "fieldtype": "Section Break",
+   "label": "Sprays",
+   "description": "Add a row per spray. “Add Spray” in the toolbar copies the previous spray's products."
+  },
+  {
+   "fieldname": "sprays",
+   "fieldtype": "Table",
+   "label": "Sprays",
+   "options": "Spray Schedule Spray"
+  },
+  {
+   "fieldname": "products_section",
+   "fieldtype": "Section Break",
+   "label": "Products",
+   "description": "Dose is per litre of water (ml/L or gm/L); ppm = mg per litre. Quantity = Dose × total water. Rate is ₹ per litre / per kg."
+  },
+  {
+   "fieldname": "products",
+   "fieldtype": "Table",
+   "label": "Products",
+   "options": "Spray Schedule Product"
+  },
+  {
+   "fieldname": "totals_section",
+   "fieldtype": "Section Break",
+   "label": "Totals"
+  },
+  {
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "label": "Grand Total (required qty × rate)",
+   "read_only": 1,
+   "bold": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "totals_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "grand_pack_total",
+   "fieldtype": "Currency",
+   "label": "Value at Full Pack Sizes",
+   "read_only": 1
+  },
+  {
+   "fieldname": "report_tab",
+   "fieldtype": "Tab Break",
+   "label": "Report"
+  },
+  {
+   "fieldname": "schedule_preview",
+   "fieldtype": "HTML",
+   "label": "Schedule Preview"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-23 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Farm Advisory",
+ "name": "Spray Schedule",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "Farm Advisory Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "Farm Advisor",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "naming_series:",
+ "title_field": "farmer_name",
+ "search_fields": "farmer_name,crop,mobile_no",
+ "show_title_field_in_link": 1,
+ "track_changes": 1,
+ "default_print_format": "Spray Schedule Report"
+}
