@@ -16,7 +16,7 @@ const WATER_DEFAULTS = { "Litres per acre": 200, "Litres per plant": 1, "Total w
 const SPRAY_LABELS = {
 	parent: {
 		branch: "शाखा", posting_date: "तारीख",
-		customer: "शेतकरी (ग्राहक)", first_name: "पहिले नाव", middle_name: "वडिलांचे / मधले नाव",
+		customer: "ग्राहकाचे नाव", first_name: "पहिले नाव", middle_name: "वडिलांचे / मधले नाव",
 		last_name: "आडनाव", farmer_name: "शेतकऱ्याचे नाव", village: "गाव", taluka: "तालुका",
 		district: "जिल्हा", state: "राज्य", pin_code: "पिन कोड", mobile_no: "मोबाईल नंबर",
 		whatsapp_same_as_mobile: "मोबाईल नंबर प्रमाणेच", whatsapp_no: "व्हॉट्सअ‍ॅप नंबर",

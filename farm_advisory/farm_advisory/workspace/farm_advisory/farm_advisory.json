@@ -6,7 +6,7 @@
    "label": "Basal Dose per Month"
   }
  ],
- "content": "[{\"id\": \"hdr_dash\", \"type\": \"header\", \"data\": {\"text\": \"<span class='h4'>Dashboard</span>\", \"col\": 12}}, {\"id\": \"basal_count\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Basal Recommendations\", \"col\": 3}}, {\"id\": \"basal_month\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Basal This Month\", \"col\": 3}}, {\"id\": \"basal_cost\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Basal Fertilizer Cost\", \"col\": 3}}, {\"id\": \"spray_count\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Spray Schedules\", \"col\": 3}}, {\"id\": \"ch_basal\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Basal Dose per Month\", \"col\": 12}}, {\"id\": \"sp1\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"hdr_qa\", \"type\": \"header\", \"data\": {\"text\": \"<span class='h4'>Quick Actions</span>\", \"col\": 12}}, {\"id\": \"sc0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Basal Dose\", \"col\": 4}}, {\"id\": \"sc1\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"New Basal Dose\", \"col\": 4}}, {\"id\": \"sc2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Spray Schedule\", \"col\": 4}}, {\"id\": \"sc3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"New Spray Schedule\", \"col\": 4}}, {\"id\": \"sc4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Farmers\", \"col\": 4}}, {\"id\": \"sc5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Settings\", \"col\": 4}}, {\"id\": \"sp2\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"hdr_cd\", \"type\": \"header\", \"data\": {\"text\": \"<span class='h4'>Masters &amp; Reports</span>\", \"col\": 12}}, {\"id\": \"cd0\", \"type\": \"card\", \"data\": {\"card_name\": \"Calculators\", \"col\": 4}}, {\"id\": \"cd1\", \"type\": \"card\", \"data\": {\"card_name\": \"Fertilizer Masters\", \"col\": 4}}, {\"id\": \"cd2\", \"type\": \"card\", \"data\": {\"card_name\": \"Spray Masters\", \"col\": 4}}, {\"id\": \"cd3\", \"type\": \"card\", \"data\": {\"card_name\": \"Locations & Branches\", \"col\": 4}}, {\"id\": \"cd4\", \"type\": \"card\", \"data\": {\"card_name\": \"Reports\", \"col\": 4}}]",
+ "content": "[{\"id\": \"hdr_dash\", \"type\": \"header\", \"data\": {\"text\": \"<span class='h4'>Dashboard</span>\", \"col\": 12}}, {\"id\": \"basal_count\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Basal Recommendations\", \"col\": 3}}, {\"id\": \"basal_month\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Basal This Month\", \"col\": 3}}, {\"id\": \"basal_cost\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Basal Fertilizer Cost\", \"col\": 3}}, {\"id\": \"spray_count\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Spray Schedules\", \"col\": 3}}, {\"id\": \"ch_basal\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Basal Dose per Month\", \"col\": 12}}, {\"id\": \"sp1\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"hdr_qa\", \"type\": \"header\", \"data\": {\"text\": \"<span class='h4'>Quick Actions</span>\", \"col\": 12}}, {\"id\": \"sc0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Basal Dose\", \"col\": 4}}, {\"id\": \"sc2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Spray Schedule\", \"col\": 4}}, {\"id\": \"sc5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Settings\", \"col\": 4}}, {\"id\": \"sp2\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"hdr_cd\", \"type\": \"header\", \"data\": {\"text\": \"<span class='h4'>Masters &amp; Reports</span>\", \"col\": 12}}, {\"id\": \"cd0\", \"type\": \"card\", \"data\": {\"card_name\": \"Calculators\", \"col\": 4}}, {\"id\": \"cd1\", \"type\": \"card\", \"data\": {\"card_name\": \"Fertilizer Masters\", \"col\": 4}}, {\"id\": \"cd2\", \"type\": \"card\", \"data\": {\"card_name\": \"Spray Masters\", \"col\": 4}}, {\"id\": \"cd3\", \"type\": \"card\", \"data\": {\"card_name\": \"Locations & Branches\", \"col\": 4}}, {\"id\": \"cd4\", \"type\": \"card\", \"data\": {\"card_name\": \"Reports\", \"col\": 4}}]",
  "creation": "2026-10-23 10:00:00.000000",
  "docstatus": 0,
  "doctype": "Workspace",
@@ -63,7 +63,7 @@
    "dependencies": "",
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Farmers (Customer)",
+   "label": "Customer",
    "link_count": 0,
    "link_to": "Customer",
    "link_type": "DocType",
@@ -246,7 +246,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-10-28 13:00:00.000000",
+ "modified": "2026-11-02 14:00:00.000000",
  "modified_by": "Administrator",
  "module": "Farm Advisory",
  "name": "Farm Advisory",
@@ -294,34 +294,10 @@
    "type": "Page"
   },
   {
-   "color": "Green",
-   "doc_view": "New",
-   "label": "New Basal Dose",
-   "link_to": "Basal Dose Recommendation",
-   "stats_filter": "{}",
-   "type": "DocType"
-  },
-  {
    "color": "Blue",
    "doc_view": "List",
    "label": "Spray Schedule",
    "link_to": "Spray Schedule",
-   "stats_filter": "{}",
-   "type": "DocType"
-  },
-  {
-   "color": "Blue",
-   "doc_view": "New",
-   "label": "New Spray Schedule",
-   "link_to": "Spray Schedule",
-   "stats_filter": "{}",
-   "type": "DocType"
-  },
-  {
-   "color": "Orange",
-   "doc_view": "List",
-   "label": "Farmers",
-   "link_to": "Customer",
    "stats_filter": "{}",
    "type": "DocType"
   },

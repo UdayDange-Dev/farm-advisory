@@ -84,11 +84,11 @@
   {
    "fieldname": "customer",
    "fieldtype": "Link",
-   "label": "Farmer (Customer)",
+   "label": "Customer Name",
    "options": "Customer",
    "reqd": 1,
    "in_standard_filter": 1,
-   "description": "Select the farmer's Customer record, or fill the farmer details and use Create Customer."
+   "description": "Select an existing Customer, or fill the details below and use Create Customer."
   },
   {
    "fieldname": "first_name",
@@ -277,7 +277,7 @@
   }
  ],
  "links": [],
- "modified": "2026-10-28 15:00:00.000000",
+ "modified": "2026-11-02 14:00:00.000000",
  "modified_by": "Administrator",
  "module": "Farm Advisory",
  "name": "Basal Dose Recommendation",

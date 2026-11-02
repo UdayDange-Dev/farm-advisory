@@ -57,22 +57,6 @@
   {
    "added": 0,
    "child": 0,
-   "collapsible": 0,
-   "hidden": 0,
-   "indent": 0,
-   "is_default_module": 0,
-   "keep_closed": 0,
-   "label": "Farmers",
-   "open_in_new_tab": 0,
-   "show_arrow": 0,
-   "type": "Link",
-   "icon": "users",
-   "link_type": "DocType",
-   "link_to": "Customer"
-  },
-  {
-   "added": 0,
-   "child": 0,
    "collapsible": 1,
    "hidden": 0,
    "indent": 1,
@@ -341,7 +325,7 @@
    "link_to": "Branch"
   }
  ],
- "modified": "2026-10-28 13:00:00.000000",
+ "modified": "2026-11-02 14:00:00.000000",
  "modified_by": "Administrator",
  "module": "Farm Advisory",
  "name": "Farm Advisory",
