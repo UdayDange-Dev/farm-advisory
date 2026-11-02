@@ -9,14 +9,14 @@ app_license = "mit"
 # ------------------
 
 required_apps = ["erpnext"]
-app_logo_url = "/assets/farm_advisory/images/agrismart_logo.png"
+app_logo_url = "/assets/farm_advisory/images/farm_advisory_icon.png"
 app_home = "/desk/farm-advisory"
 
 # Each item in the list will be shown as an app in the apps page
 add_to_apps_screen = [
 	{
 		"name": "farm_advisory",
-		"logo": "/assets/farm_advisory/images/agrismart_logo.png",
+		"logo": "/assets/farm_advisory/images/farm_advisory_icon.png",
 		"title": "Farm Advisory",
 		"route": "/desk/farm-advisory",
 		"has_permission": "farm_advisory.utils.permissions.has_app_permission",
