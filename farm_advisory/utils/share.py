@@ -7,6 +7,7 @@ and ``basal_csv`` = ``exportCSV()`` from the reference calculators.
 import csv
 import io
 import json
+import re
 
 import frappe
 from frappe import _
@@ -188,15 +189,16 @@ LEGACY_ROUNDING = {
 
 
 def _ensure_location(doctype, key, value):
-	value = (value or "").strip()
+	# Same normalisation as clean_name() in the master's validate, so the
+	# lookup and the returned link match the name the record is saved under.
+	value = re.sub(r"\s+", " ", value or "").strip()
 	if not value:
 		return None
 	if frappe.db.exists(doctype, value):
 		return value
 	if not frappe.has_permission(doctype, "create"):
 		return None
-	frappe.get_doc({"doctype": doctype, f"{key}_name": value}).insert()
-	return value
+	return frappe.get_doc({"doctype": doctype, f"{key}_name": value}).insert().name
 
 
 def parse_legacy_basal(content):

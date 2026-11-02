@@ -147,6 +147,9 @@ def grant_erpnext_permissions():
 			add_permission(doctype, role, 0)
 			for right in rights:
 				update_permission_property(doctype, role, 0, right, 1, validate=False)
+			# Custom DocPerm defaults export to 1; only grant what is listed above.
+			if "export" not in rights:
+				update_permission_property(doctype, role, 0, "export", 0, validate=False)
 
 
 # --------------------------------------------------------------------------- #
