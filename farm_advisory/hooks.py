@@ -99,7 +99,7 @@ jinja = {
 # Installation
 # ------------
 
-# before_install = "farm_advisory.install.before_install"
+before_install = "farm_advisory.setup.install.before_install"
 after_install = "farm_advisory.setup.install.after_install"
 
 # Uninstallation

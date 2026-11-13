@@ -13,6 +13,25 @@ from frappe.permissions import add_permission, update_permission_property
 from farm_advisory.setup import seed_data as S
 
 ROLES = ("Farm Advisory Manager", "Farm Advisor")
+# Tables the app's own files are imported into, which only a migrated Frappe v16.50+ site has.
+REQUIRED_FRAMEWORK_TABLES = ("Sidebar", "Sidebar Item")
+
+
+def before_install():
+	"""Refuse to install on a site whose Frappe schema is behind its code.
+
+	Runs before Frappe creates the Module Def or imports any file, so a refusal leaves nothing
+	behind. Without it, importing ``sidebar/farm_advisory`` fails half-way with MariaDB 1146
+	(``tabSidebar`` doesn't exist) after DocTypes and the Module Def are already committed.
+	Reads only.
+	"""
+	missing = [dt for dt in REQUIRED_FRAMEWORK_TABLES if not frappe.db.table_exists(dt, cached=False)]
+	if missing:
+		frappe.throw(
+			f"Farm Advisory needs Frappe v16.50 or later with its schema migrated, but this site has "
+			f"no table for: {', '.join(missing)}. Back up the site, run "
+			f"`bench --site {frappe.local.site} migrate`, then install again."
+		)
 
 
 def after_install():

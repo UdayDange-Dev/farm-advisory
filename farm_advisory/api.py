@@ -156,6 +156,7 @@ def get_crop_defaults(crop):
 @frappe.whitelist()
 def get_first_spray_product(category):
 	"""The prototype pre-selects the first product of a category."""
+	frappe.has_permission("Spray Product", "read", throw=True)
 	return frappe.db.get_value(
 		"Spray Product",
 		{"category": category, "is_active": 1},

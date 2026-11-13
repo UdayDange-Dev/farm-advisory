@@ -15,6 +15,12 @@ dependencies = [
 requires = ["flit_core >=3.4,<4"]
 build-backend = "flit_core.buildapi"
 
+# Framework compatibility, independent of this app's own version. The module ships a `Sidebar`
+# (farm_advisory/farm_advisory/sidebar/), a DocType that first exists in Frappe v16.50.0.
+[tool.bench.frappe-dependencies]
+frappe = ">=16.50.0,<17.0.0"
+erpnext = ">=16.52.0,<17.0.0"
+
 # These dependencies are only installed when developer mode is enabled
 [tool.bench.dev-dependencies]
 # package_name = "~=1.1.0"

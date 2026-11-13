@@ -103,6 +103,10 @@ Fertilizer Requirement Summary has a **Group by Crop** option, which shows each 
 
 ### Installation
 
+Requires Frappe v16.50 or later (the module ships a `Sidebar`, which first exists in
+v16.50) and ERPNext v16, with the site already migrated to them. The install stops with a
+clear message, and creates nothing, if the site's Frappe schema is behind its code.
+
 ```bash
 cd $PATH_TO_YOUR_BENCH
 bench get-app $URL_OF_THIS_REPO --branch version-16
