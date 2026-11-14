@@ -238,7 +238,7 @@ Advisors also get read/write/create on Customer and read on Branch.
 
 1. **Spray plant count before water.** For water "per plant", the prototype briefly used the previous plant count after an area or spacing change (a one-event lag). Here the plant count is calculated first.
 2. **No browser storage.** Records are saved in the database. JSON export was not added, because the records, PDF and CSV cover it. Old files can still be imported.
-3. **Branch is ERPNext's Branch DocType**, extended with the Marathi name, address and phone. It is not a separate master.
+3. **Branch is ERPNext's Branch DocType**, extended with the Marathi name, address and phone. It is not a separate master. On install, the four Agri Smart branches are added only if no Branch with the same `branch` value exists; existing branches are never overwritten (only blank Marathi/address/phone fields are filled), and a branch that cannot be inserted (for example because the site has its own mandatory fields on Branch) is skipped and logged in Error Log instead of failing the install. To skip branch seeding entirely on a site that has its own branches, run `bench --site <site> set-config farm_advisory_skip_branch_seed 1` before `install-app`.
 4. **Basal print** gets the company header (logo, company name).
 5. **Marathi names were added to the Guava, Mango and Papaya crop masters.** These crops appear only in the English Basal list.
 6. **PIN code** is free text checked as 6 digits. **Mobile / WhatsApp** must be 10 digits; a leading `+91` or `0` is removed.

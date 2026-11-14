@@ -193,12 +193,7 @@ def seed_masters():
 		for en, mr in rows:
 			_ensure(dt, en, {f"{key}_name": en, f"{key}_name_mr": mr})
 
-	for branch, mr, address, phone in S.BRANCHES:
-		if not frappe.db.exists("Branch", branch):
-			_insert(
-				"Branch",
-				{"branch": branch, "fa_branch_name_mr": mr, "fa_address": address, "fa_phone": phone},
-			)
+	seed_branches()
 
 	for name, mr, cap in S.SPRAY_EQUIPMENT:
 		_ensure(
@@ -274,6 +269,53 @@ def seed_masters():
 		)
 
 
+def seed_branches():
+	"""Add the Agri Smart branches without touching a site's own Branch master.
+
+	Branch is ERPNext's shared master, so a site that already has branches may name them
+	differently (naming rule / renamed records), or carry its own mandatory custom fields.
+	Matching only on ``name`` then inserts a duplicate ``branch`` value (unique) or fails
+	mandatory checks, and the whole install aborts. Here we:
+	  * skip entirely when ``farm_advisory_skip_branch_seed`` is set in site_config.json;
+	  * match an existing record on the ``branch`` field as well as on ``name``;
+	  * only fill the Marathi / address / phone fields where they are blank;
+	  * log and skip a branch that cannot be inserted instead of failing the install.
+	Branch is optional on every Farm Advisory form, so a skipped branch breaks nothing.
+	"""
+	if frappe.conf.get("farm_advisory_skip_branch_seed"):
+		return
+
+	for branch, mr, address, phone in S.BRANCHES:
+		extra = {"fa_branch_name_mr": mr, "fa_address": address, "fa_phone": phone}
+		existing = frappe.db.get_value("Branch", {"branch": branch}, "name") or frappe.db.exists(
+			"Branch", branch
+		)
+		if existing:
+			current = frappe.db.get_value("Branch", existing, list(extra), as_dict=True) or {}
+			blanks = {k: v for k, v in extra.items() if not current.get(k)}
+			if blanks:
+				frappe.db.set_value("Branch", existing, blanks, update_modified=False)
+			continue
+
+		try:
+			frappe.db.savepoint("fa_branch_seed")
+			_insert("Branch", {"branch": branch, **extra})
+		except Exception:
+			frappe.db.rollback(save_point="fa_branch_seed")
+			frappe.log_error(
+				title=f"Farm Advisory: skipped seeding Branch '{branch}'",
+				message=frappe.get_traceback(),
+			)
+
+
+def _first_seeded_branch():
+	for branch, *_ in S.BRANCHES:
+		name = frappe.db.get_value("Branch", {"branch": branch}, "name")
+		if name:
+			return name
+	return None
+
+
 def seed_settings():
 	s = frappe.get_single("Farm Advisory Settings")
 	changed = False
@@ -281,7 +323,8 @@ def seed_settings():
 		"company_name": S.COMPANY_NAME,
 		"report_email": S.COMPANY_EMAIL,
 		"report_tagline": S.REPORT_TAGLINE,
-		"default_branch": S.BRANCHES[0][0],
+		# Only point at a branch that really exists, or the Link validation fails the save.
+		"default_branch": _first_seeded_branch(),
 		"default_report_language": "English + Marathi",
 		"default_bag_rounding": "Round up (full bags)",
 	}
