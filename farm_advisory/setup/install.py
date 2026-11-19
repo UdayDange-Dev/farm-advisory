@@ -150,7 +150,7 @@ def make_custom_fields():
 
 
 def grant_erpnext_permissions():
-	"""Advisors pick and create farmers (Customer) and read branches.
+	"""Advisors pick and create farmers (Customer) and read branches and addresses.
 
 	Uses Custom DocPerm, so ERPNext's own permission files are untouched.
 	"""
@@ -158,6 +158,8 @@ def grant_erpnext_permissions():
 		for doctype, rights in (
 			("Customer", ("read", "write", "create", "report", "print")),
 			("Branch", ("read",)),
+			# the farmer address shown on every calculator comes from ERPNext Address
+			("Address", ("read",)),
 		):
 			if frappe.db.exists(
 				"Custom DocPerm", {"parent": doctype, "role": role, "permlevel": 0, "if_owner": 0}

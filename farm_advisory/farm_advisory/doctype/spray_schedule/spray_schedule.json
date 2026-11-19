@@ -27,6 +27,10 @@
   "whatsapp_same_as_mobile",
   "whatsapp_no",
   "email_id",
+  "address_section",
+  "customer_address",
+  "address_cb",
+  "address_display",
   "crop_tab",
   "crop_section",
   "crop",
@@ -222,6 +226,28 @@
    "fieldtype": "Data",
    "label": "Email ID",
    "options": "Email"
+  },
+  {
+   "fieldname": "address_section",
+   "fieldtype": "Section Break",
+   "label": "Address"
+  },
+  {
+   "fieldname": "customer_address",
+   "fieldtype": "Link",
+   "label": "Customer Address",
+   "options": "Address",
+   "description": "Fetched from the farmer's primary ERPNext Address; pick another linked address if needed."
+  },
+  {
+   "fieldname": "address_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "address_display",
+   "fieldtype": "Small Text",
+   "label": "Address",
+   "description": "Editable. Without a linked Address it is built from Village, Taluka, District, State and PIN."
   },
   {
    "fieldname": "crop_tab",
@@ -495,7 +521,7 @@
   }
  ],
  "links": [],
- "modified": "2026-11-02 14:00:00.000000",
+ "modified": "2026-11-19 12:00:00.000000",
  "modified_by": "Administrator",
  "module": "Farm Advisory",
  "name": "Spray Schedule",

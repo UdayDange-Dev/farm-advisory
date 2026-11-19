@@ -175,17 +175,60 @@ frappe.provide("farm_advisory");
 	farm_advisory.lang_key = (v) => ({ English: "en", Marathi: "mr" })[v] || "both";
 
 	// ── farmer = ERPNext Customer ─────────────────────────────────────
+	// Address fields are set even when empty: a newly chosen farmer must not
+	// keep the previous farmer's address.
+	const ADDRESS_KEYS = ["customer_address", "address_display"];
+
 	farm_advisory.fill_from_customer = function (frm) {
-		if (!frm.doc.customer) return;
+		if (!frm.doc.customer) {
+			ADDRESS_KEYS.forEach((k) => frm.get_field(k) && frm.set_value(k, ""));
+			return;
+		}
 		frappe.call({
 			method: "farm_advisory.utils.farmer.get_farmer_details",
 			args: { customer: frm.doc.customer },
-		}).then((r) => {
+		}).then(async (r) => {
 			const v = r.message || {};
-			Object.keys(v).forEach((k) => {
-				if (v[k] !== undefined && v[k] !== null && v[k] !== "") frm.set_value(k, v[k]);
-			});
+			const count = v.address_count || 0;
+			delete v.address_count;
+			frm.__fa_filling = true;
+			try {
+				for (const k of Object.keys(v)) {
+					if (!frm.get_field(k)) continue;
+					const always = ADDRESS_KEYS.includes(k);
+					if (always || (v[k] !== undefined && v[k] !== null && v[k] !== "")) {
+						await frm.set_value(k, v[k] == null ? "" : v[k]);
+					}
+				}
+			} finally {
+				frm.__fa_filling = false;
+			}
+			if (count > 1) {
+				frappe.show_alert({
+					message: __("This farmer has {0} addresses; the primary one was used. Pick another under Address if needed.", [count]),
+					indicator: "blue",
+				});
+			}
 		});
+	};
+
+	/** The user picked another of the farmer's addresses: refresh its text. */
+	farm_advisory.fill_address = function (frm) {
+		if (frm.__fa_filling || !frm.get_field("address_display")) return;
+		if (!frm.doc.customer_address || !frm.doc.customer) return;
+		frappe.call({
+			method: "farm_advisory.utils.farmer.get_address_display",
+			args: { customer: frm.doc.customer, address: frm.doc.customer_address },
+		}).then((r) => frm.set_value("address_display", r.message || ""));
+	};
+
+	/** Address dropdown: only the selected farmer's addresses. */
+	farm_advisory.setup_address_query = function (frm) {
+		if (!frm.get_field("customer_address")) return;
+		frm.set_query("customer_address", () => ({
+			query: "farm_advisory.utils.farmer.customer_address_query",
+			filters: { customer: frm.doc.customer || "" },
+		}));
 	};
 
 	farm_advisory.create_customer = function (frm) {

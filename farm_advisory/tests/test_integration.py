@@ -186,14 +186,15 @@ class TestFarmAdvisory(IntegrationTestCase):
 	def test_basal_mango_template(self):
 		doc = _basal(self.customer).insert()
 		crop = doc.crops[0]
-		self.assertEqual(crop.plant_count, 193)
+		# 15 × 15 ft on 1 acre = 193.6 plants → nearest whole plant (was floor: 193)
+		self.assertEqual(crop.plant_count, 194)
 		names = [f.fertilizer_name for f in doc.fertilizers]
 		self.assertEqual(names[0], "ORGANIC 4 G - NPK")
 		self.assertEqual(len(names), 8)
 		bio = doc.fertilizers[1]
 		self.assertEqual((bio.pack_kg, bio.contains), (25, "BIO AVAILABLE PHOSPHORUS 10 %"))
 		self.assertAlmostEqual(doc.grand_total, sum(f.amount for f in doc.fertilizers))
-		self.assertAlmostEqual(crop.cost_per_plant, crop.total_cost / 193)
+		self.assertAlmostEqual(crop.cost_per_plant, crop.total_cost / 194)
 		self.assertEqual(len(doc.purchase_items), 8)
 		frappe.get_print("Basal Dose Recommendation", doc.name, "Basal Dose Recommendation Report", doc=doc)
 

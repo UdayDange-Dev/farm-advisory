@@ -10,7 +10,13 @@ from frappe.utils import flt
 
 from farm_advisory.utils.basal_calc import apply_basal_calculation
 from farm_advisory.utils.report import render_basal_html, render_spray_html
-from farm_advisory.utils.share import basal_csv, basal_whatsapp_text, parse_legacy_basal, spray_whatsapp_text
+from farm_advisory.utils.share import (
+	basal_csv,
+	basal_whatsapp_text,
+	consultation_whatsapp_text,
+	parse_legacy_basal,
+	spray_whatsapp_text,
+)
 from farm_advisory.utils.spray_calc import apply_spray_calculation
 
 SPRAY_PARENT = (
@@ -43,6 +49,10 @@ SPRAY_PRODUCT = (
 BASAL_PARENT = ("total_plants", "total_qty_kg", "grand_total")
 BASAL_CROP = (
 	"crop_no",
+	"area",
+	"area_sq_m",
+	"area_acre",
+	"crop_age",
 	"plant_count",
 	"dose_gm_per_plant",
 	"total_qty_kg",
@@ -51,6 +61,26 @@ BASAL_CROP = (
 	"cost_per_plant",
 )
 BASAL_FERT = ("crop_no", "rate_gm", "qty_kg", "bags", "cost_per_kg", "amount", "cost_per_plant")
+CC_PARENT = (
+	"crop_area_total",
+	"landholder_area_total",
+	"total_plants",
+	"crop_summary",
+	"problem_count",
+	"max_severity",
+	"ndvi_latest",
+	"ndvi_change",
+	"ndvi_status",
+	"spray_decision",
+	"irr_dripper_count",
+	"irr_flow_lph",
+	"irr_water_l",
+	"irr_water_per_plant",
+	"irr_depth_mm",
+	"irr_status",
+)
+CC_BLOCK = ("block_no", "plant_age", "area_acre", "plant_count")
+SHARE_DOCTYPES = ("Spray Schedule", "Basal Dose Recommendation", "Crop Consultation")
 
 
 def _form_doc(doctype, doc):
@@ -116,6 +146,39 @@ def preview_basal_dose(doc):
 
 
 @frappe.whitelist()
+def preview_crop_consultation(doc):
+	from farm_advisory.utils import consultation_calc as cc
+
+	d = _form_doc("Crop Consultation", doc)
+	cc.apply_consultation_calculation(d)
+	return {
+		"parent": _pick(d, CC_PARENT),
+		"crop_blocks": _rows(d.crop_blocks, CC_BLOCK),
+		"panels": {
+			"advisory_html": cc.advisory_html(d),
+			"data_checks": cc.checks_html(d),
+			"followup_plan": cc.followup_html(d),
+			"ndvi_chart": cc.ndvi_svg(d),
+		},
+	}
+
+
+@frappe.whitelist()
+def parse_satyukt_json(content):
+	"""Field values and NDVI rows from a pasted Satyukt JSON (nothing is saved)."""
+	from farm_advisory.utils.consultation_calc import parse_satyukt
+
+	frappe.has_permission("Crop Consultation", "write", throw=True)
+	if len(content or "") > 500_000:
+		frappe.throw(_("The JSON is too large."))
+	try:
+		data = frappe.parse_json(content)
+	except Exception:
+		frappe.throw(_("Invalid JSON."))
+	return parse_satyukt(data)
+
+
+@frappe.whitelist()
 def get_crop_defaults(crop):
 	"""Default spacing and the basal fertilizer template for a crop.
 
@@ -168,13 +231,18 @@ def get_first_spray_product(category):
 
 @frappe.whitelist()
 def get_whatsapp_message(doctype, name):
-	if doctype not in ("Spray Schedule", "Basal Dose Recommendation"):
+	if doctype not in SHARE_DOCTYPES:
 		frappe.throw(_("Not supported"))
 	doc = frappe.get_doc(doctype, name)
 	doc.check_permission("read")
 	if not doc.farmer_name:
 		frappe.throw(_("Enter the farmer's name before sharing."))
-	text = spray_whatsapp_text(doc) if doctype == "Spray Schedule" else basal_whatsapp_text(doc)
+	if doctype == "Spray Schedule":
+		text = spray_whatsapp_text(doc)
+	elif doctype == "Crop Consultation":
+		text = consultation_whatsapp_text(doc)
+	else:
+		text = basal_whatsapp_text(doc)
 	return {"number": doc.whatsapp_target(), "text": text}
 
 

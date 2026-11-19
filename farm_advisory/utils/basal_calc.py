@@ -7,12 +7,14 @@ and by ``BasalDoseRecommendation.validate``.
 
 import math
 
+from farm_advisory.utils import measure
 from farm_advisory.utils.numbers import js_round, num
+from farm_advisory.utils.spray_calc import age
 
-# square metres per unit
-AREA_UNITS = {"Acre": 4046.856, "Hectare": 10000.0, "Guntha": 101.171}
-# factor that converts the entered spacing to metres
-SPACING_UNITS = {"Feet": 0.3048, "Metre": 1.0}
+# Area and spacing conversion lives in ``measure`` (exact constants, shared
+# with Spray Schedule and Crop Consultation). Kept here as aliases for callers.
+AREA_UNITS = measure.AREA_UNITS
+SPACING_UNITS = measure.LENGTH_UNITS
 RATE_UNITS = {"gm / plant": 1.0, "kg / plant": 1000.0}
 
 ROUND_UP = "Round up (full bags)"
@@ -21,11 +23,30 @@ ROUND_NONE = "No rounding (exact)"
 
 
 def auto_plants(area, area_unit, row_spacing, plant_spacing, spacing_unit):
-	"""``Math.floor(area_m2 / (row_m × plant_m))`` — floor, not round."""
-	f = SPACING_UNITS.get(spacing_unit or "Feet", 0.3048)
-	a = AREA_UNITS.get(area_unit or "Acre", AREA_UNITS["Acre"]) * num(area)
-	sp = (num(row_spacing) * f) * (num(plant_spacing) * f)
-	return math.floor(a / sp) if sp > 0 else 0
+	"""Plants from area and spacing — see ``measure.plant_count``.
+
+	Previously ``Math.floor`` over truncated constants (acre 4046.856 m²,
+	guntha 101.171 m²), which dropped a plant whenever the spacing fitted the
+	area exactly. Now the shared nearest-whole-plant rule with exact constants.
+	"""
+	return measure.plant_count(area, area_unit, row_spacing, plant_spacing, spacing_unit)
+
+
+def plot_area(crop):
+	"""Apply a plot's length × width to its area when the row asks for it.
+
+	The dimensions are in the row's spacing unit; the area keeps the row's
+	area unit. Also fills the read-only m² / acre equivalents.
+	"""
+	if (
+		crop.get("area_from_dimensions")
+		and num(crop.get("plot_length")) > 0
+		and num(crop.get("plot_width")) > 0
+	):
+		sq_m = measure.rect_area_sq_m(crop.plot_length, crop.plot_width, crop.spacing_unit)
+		crop.area = measure.from_sq_m(sq_m, crop.area_unit)
+	crop.area_sq_m = measure.to_sq_m(crop.area, crop.area_unit)
+	crop.area_acre = measure.from_sq_m(crop.area_sq_m, "Acre")
 
 
 def bags_of(qty_kg, pack_kg, rounding):
@@ -62,6 +83,8 @@ def apply_basal_calculation(doc):
 	crops = sorted(doc.get("crops") or [], key=lambda c: c.idx or 0)
 	by_no = {}
 	for c in crops:
+		plot_area(c)
+		c.crop_age = age(c.plantation_date, doc.posting_date, "en")[0] if c.get("plantation_date") else ""
 		if not c.plants_manual:
 			c.plant_count = auto_plants(c.area, c.area_unit, c.row_spacing, c.plant_spacing, c.spacing_unit)
 		c.dose_gm_per_plant = c.total_qty_kg = c.total_bags = c.total_cost = 0.0

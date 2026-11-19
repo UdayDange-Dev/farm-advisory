@@ -93,6 +93,7 @@ jinja = {
 	"methods": [
 		"farm_advisory.utils.report.fa_spray_context",
 		"farm_advisory.utils.report.fa_basal_context",
+		"farm_advisory.utils.report.fa_consultation_context",
 	],
 }
 

@@ -274,6 +274,198 @@ def fa_basal_context(doc):
 	)
 
 
+# --------------------------------------------------------------------------- #
+# Crop Consultation
+# --------------------------------------------------------------------------- #
+def _branch_header(doc, s, t):
+	name = doc.branch or s.default_branch
+	if not (name and frappe.db.exists("Branch", name)):
+		return None
+	b = frappe.db.get_value(
+		"Branch", name, ["branch", "fa_branch_name_mr", "fa_address", "fa_phone"], as_dict=True
+	)
+	return {
+		"label": t(b.branch, b.fa_branch_name_mr),
+		"address": ", ".join(x.strip() for x in (b.fa_address or "").splitlines() if x.strip()),
+		"phone": b.fa_phone or "",
+	}
+
+
+def fa_consultation_context(doc):
+	from farm_advisory.utils import consultation_calc as cc
+
+	lang = doc.get_lang()
+
+	def t(en, mr=None):
+		return tr(en, mr, lang)
+
+	def opt(value, mapping):
+		return t(value, mapping.get(value)) if value else ""
+
+	s = _settings()
+	has_gps = flt(doc.latitude) or flt(doc.longitude)
+	farmer = [
+		_kv(t("Name", "नाव"), doc.farmer_name, "w2"),
+		_kv(t("Mobile", "मोबाईल"), doc.mobile_no),
+		_kv(t("Address", "पत्ता"), doc.address_line(lang), "w2"),
+		_kv(t("Visit date", "भेट तारीख"), dmy(doc.visit_date)),
+		_kv(t("GPS", "GPS"), f"{flt(doc.latitude):.6f}, {flt(doc.longitude):.6f}" if has_gps else ""),
+		_kv(t("Consultant", "सल्लागार"), doc.consultant),
+		_kv(t("Landmark", "खूण"), doc.landmark),
+	]
+	unit = i18n.opt(doc.farm_area_unit, i18n.AREA_UNITS, lang)
+
+	def area(v):
+		return f"{fmt(v, 4)} {unit}" if flt(v) else ""
+
+	farm = [
+		_kv(t("Total area", "एकूण क्षेत्र"), area(doc.total_area)),
+		_kv(t("Irrigated", "सिंचित"), area(doc.irrigated_area)),
+		_kv(t("Non-irrigated", "कोरडवाहू"), area(doc.non_irrigated_area)),
+		_kv(t("Total plants", "एकूण झाडे"), fmt(doc.total_plants, 0) if cint(doc.total_plants) else ""),
+	]
+	blocks = []
+	for b in doc.get("crop_blocks") or []:
+		variety = ""
+		if b.variety:
+			v = (
+				frappe.db.get_value(
+					"Farm Crop Variety", b.variety, ["variety_name", "variety_name_mr"], as_dict=True
+				)
+				or {}
+			)
+			variety = t(v.get("variety_name") or b.variety, v.get("variety_name_mr"))
+		spacing = ""
+		if flt(b.row_spacing) and flt(b.plant_spacing):
+			spacing = (
+				f"{fmt(b.row_spacing, 4)} × {fmt(b.plant_spacing, 4)} "
+				f"{i18n.opt(b.spacing_unit, i18n.SPACING_UNITS, lang)}"
+			)
+		blocks.append(
+			{
+				"no": b.block_no,
+				"crop": t(b.crop, _mr("Farm Crop", b.crop, "crop_name_mr")) if b.crop else "",
+				"variety": variety,
+				"stage": opt(b.crop_stage, cc.STAGES),
+				"age": b.plant_age or "",
+				"area": f"{fmt(b.area, 4)} {i18n.opt(b.area_unit, i18n.AREA_UNITS, lang)}"
+				if flt(b.area)
+				else "",
+				"spacing": spacing,
+				"plants": fmt(b.plant_count, 0) + (" *" if b.plants_manual else "")
+				if cint(b.plant_count)
+				else "",
+			}
+		)
+	problems = [
+		{
+			"no": i,
+			"type": opt(p.problem_type, cc.PROBLEMS),
+			"part": opt(p.affected_part, cc.PARTS),
+			"severity": opt(p.severity, cc.SEVERITY),
+			"pct": f"{fmt(p.affected_pct)}%" if flt(p.affected_pct) else "",
+			"block": str(p.block_no) if cint(p.block_no) else "",
+			"observation": p.observation or "",
+		}
+		for i, p in enumerate(doc.get("problems") or [], start=1)
+	]
+	rx = [
+		{
+			"no": i,
+			"product": p.product or "",
+			"dose": f"{fmt(p.dose, 3)} {p.dose_unit or ''}" if flt(p.dose) else "",
+			"per": p.per or "",
+			"method": opt(p.method, cc.METHODS),
+			"timing": p.timing or "",
+			"remarks": p.remarks or "",
+		}
+		for i, p in enumerate(doc.get("prescription_items") or [], start=1)
+	]
+	irrigation = []
+	if flt(doc.irr_water_l):
+		irrigation = [
+			_kv(t("Crop block", "पीक विभाग"), str(cint(doc.irr_block_no) or 1)),
+			_kv(t("Drippers", "ड्रिपर"), fmt(doc.irr_dripper_count, 0)),
+			_kv(t("Flow (L/h)", "प्रवाह (लि./तास)"), fmt(doc.irr_flow_lph, 1)),
+			_kv(t("Water / irrigation (L)", "प्रति सिंचन पाणी (लि.)"), fmt(doc.irr_water_l, 1)),
+			_kv(t("Per plant (L)", "प्रति झाड (लि.)"), fmt(doc.irr_water_per_plant, 2)),
+			_kv(t("Depth over block (mm)", "विभागावर खोली (मिमी)"), fmt(doc.irr_depth_mm, 3)),
+		]
+	L = {
+		"title": t("FARM PRESCRIPTION", "फार्म प्रिस्क्रिप्शन"),
+		"phone": t("Phone", "फोन"),
+		"farmer": t("Farmer & visit", "शेतकरी व भेट"),
+		"farm": t("Farm", "शेत"),
+		"blocks": t("Crop blocks", "पीक विभाग"),
+		"crop": t("Crop", "पीक"),
+		"variety": t("Variety", "वाण"),
+		"stage": t("Stage", "अवस्था"),
+		"age": t("Age", "वय"),
+		"area": t("Area", "क्षेत्र"),
+		"spacing": t("Spacing", "अंतर"),
+		"plants": t("Plants", "झाडे"),
+		"manual": t("* entered manually", "* स्वतः भरले"),
+		"diagnosis": t("Diagnosis", "निदान"),
+		"problem": t("Problem", "समस्या"),
+		"part": t("Part", "भाग"),
+		"severity": t("Severity", "तीव्रता"),
+		"affected": t("Affected", "बाधित"),
+		"block": t("Block", "विभाग"),
+		"observation": t("Observation", "निरीक्षण"),
+		"advisory": t("Advisory", "सल्ला"),
+		"irrigation": t("Irrigation", "सिंचन"),
+		"prescription": t("Prescription", "शिफारस"),
+		"product": t("Product", "उत्पादन"),
+		"dose": t("Dose", "मात्रा"),
+		"per": t("Per", "प्रति"),
+		"method": t("Method", "पद्धत"),
+		"timing": t("Timing", "वेळ"),
+		"remarks": t("Remarks", "सूचना"),
+		"notes": t("Agronomic notes", "कृषी सूचना"),
+		"followups": t("Follow-up plan", "पाठपुरावा"),
+		"day": t("Day", "दिवस"),
+		"next_visit": t("Next visit", "पुढील भेट"),
+		"status": t("Status", "स्थिती"),
+		"agronomist": t("Approving agronomist", "मान्यता देणारे तज्ज्ञ"),
+		"reference": t("Reference", "संदर्भ"),
+		"disclaimer": t(
+			"Products and doses are decided by the agronomist; always follow the label and safety "
+			"precautions. Satellite estimates are advisory and must be verified in the field.",
+			"उत्पादने व मात्रा तज्ज्ञ ठरवतात; नेहमी लेबल व सुरक्षा सूचना पाळा. "
+			"उपग्रह अंदाज सल्ला स्वरूपाचे असून प्रत्यक्ष पडताळणी आवश्यक.",
+		),
+		"draft": t("DRAFT – not yet approved by an agronomist", "मसुदा – तज्ज्ञ मान्यता बाकी"),
+		"sign_farmer": t("Farmer signature", "शेतकरी सही"),
+		"sign_agronomist": t("Agronomist signature", "तज्ज्ञ सही"),
+		"generated": t("Generated on", "तयार केल्याची तारीख"),
+	}
+	return frappe._dict(
+		lang=lang,
+		L=L,
+		logo=s.report_logo or BUNDLED_LOGO,
+		company=s.company_name,
+		email=s.report_email,
+		branch=_branch_header(doc, s, t),
+		farmer=farmer,
+		farm=[x for x in farm if x["value"]],
+		blocks=blocks,
+		any_manual=any(b.plants_manual for b in doc.get("crop_blocks") or []),
+		problems=problems,
+		advisory=cc.advisory_cards(doc, lang),
+		irrigation=irrigation,
+		rx=rx,
+		notes=doc.agronomic_notes or "",
+		followups=[(d, dmy(dt)) for d, dt in cc.followup_dates(doc.visit_date)],
+		next_visit=dmy(doc.next_visit),
+		status=opt(doc.status, cc.STATUS),
+		is_draft=doc.status in (None, "", "Draft"),
+		agronomist=doc.agronomist or "",
+		reference=doc.reference_id or "",
+		generated_on=dmy(today()),
+		doc_name=doc.name if not doc.is_new() else "",
+	)
+
+
 def render_spray_html(doc):
 	return frappe.render_template(SPRAY_TEMPLATE, {"r": fa_spray_context(doc)})
 

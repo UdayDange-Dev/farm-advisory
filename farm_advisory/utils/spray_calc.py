@@ -13,13 +13,16 @@ import math
 
 from frappe.utils import getdate, today
 
+from farm_advisory.utils import measure
 from farm_advisory.utils.i18n import tr
-from farm_advisory.utils.numbers import js_round, num
+from farm_advisory.utils.numbers import num
 
-# ``AUNITS`` — square feet per unit
-AREA_UNITS = {"Acre": 43560.0, "Guntha": 1089.0, "Hectare": 107639.1}
-# ``SUNITS`` — factor that converts the entered spacing to feet
-SPACING_UNITS = {"Feet": 1.0, "Metre": 3.28084}
+# ``AUNITS`` — square feet per unit. Derived from the shared exact constants in
+# ``measure``: acre and guntha are unchanged (43560 / 1089 sq ft are exact);
+# the hectare was the rounded 107639.1, now 107639.104… sq ft.
+AREA_UNITS = {u: measure.AREA_UNITS[u] / measure.SQ_M_PER_SQ_FOOT for u in ("Acre", "Guntha", "Hectare")}
+# ``SUNITS`` — factor that converts the entered spacing to feet (was 3.28084)
+SPACING_UNITS = {u: f / measure.M_PER_FOOT for u, f in measure.LENGTH_UNITS.items()}
 # ``WBASIS`` — default value loaded when the basis is changed
 WATER_BASIS_DEFAULTS = {
 	"Litres per acre": 200,
@@ -41,21 +44,16 @@ def dose_key(dose_unit):
 # Plot
 # --------------------------------------------------------------------------- #
 def area_sq_ft(area, area_unit):
-	return num(area) * AREA_UNITS.get(area_unit or "Acre", AREA_UNITS["Acre"])
+	return measure.from_sq_m(measure.to_sq_m(area, area_unit), "Sq. Feet")
 
 
 def area_acre(area, area_unit):
-	return area_sq_ft(area, area_unit) / 43560.0
+	return measure.convert_area(area, area_unit, "Acre")
 
 
 def auto_plants(area, area_unit, row_spacing, plant_spacing, spacing_unit):
-	"""``autoPlants``: ``Math.round(areaSq / (row × plant))`` in feet."""
-	f = SPACING_UNITS.get(spacing_unit or "Feet", 1.0)
-	r = num(row_spacing) * f
-	p = num(plant_spacing) * f
-	if r > 0 and p > 0:
-		return js_round(area_sq_ft(area, area_unit) / (r * p))
-	return 0
+	"""``autoPlants``: ``Math.round(area / (row × plant))`` — ``measure.plant_count``."""
+	return measure.plant_count(area, area_unit, row_spacing, plant_spacing, spacing_unit)
 
 
 def total_water(basis, value, area, area_unit, plants):
@@ -207,7 +205,7 @@ def apply_spray_calculation(doc):
 	lang = doc.get_lang() if hasattr(doc, "get_lang") else "both"
 
 	doc.area_sq_ft = area_sq_ft(doc.area, doc.area_unit)
-	doc.area_acre = doc.area_sq_ft / 43560.0
+	doc.area_acre = area_acre(doc.area, doc.area_unit)
 	if not doc.plants_manual:
 		doc.plant_count = auto_plants(
 			doc.area, doc.area_unit, doc.row_spacing, doc.plant_spacing, doc.spacing_unit

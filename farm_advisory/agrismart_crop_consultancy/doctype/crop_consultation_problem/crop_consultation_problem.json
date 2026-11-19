@@ -1,0 +1,108 @@
+{
+ "actions": [],
+ "creation": "2026-11-19 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "block_no",
+  "problem_type",
+  "crop_stage",
+  "affected_part",
+  "severity",
+  "cb1",
+  "affected_pct",
+  "since_days",
+  "observed_on",
+  "obs_section",
+  "observation"
+ ],
+ "fields": [
+  {
+   "fieldname": "block_no",
+   "fieldtype": "Int",
+   "label": "Crop Block No.",
+   "in_list_view": 1,
+   "columns": 1,
+   "description": "Which crop block (0 or blank = whole farm)."
+  },
+  {
+   "fieldname": "problem_type",
+   "fieldtype": "Select",
+   "label": "Problem Type",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2,
+   "options": "Insect / Pest\nDisease\nNutrient deficiency\nWeed\nWater stress\nSalinity\nPhysiological disorder\nUnknown / Other"
+  },
+  {
+   "fieldname": "crop_stage",
+   "fieldtype": "Select",
+   "label": "Crop Stage",
+   "options": "\nNursery\nVegetative\nFlowering\nFruit set\nFruit development\nMaturity\nHarvest\nPost-harvest\nDormancy\nOther"
+  },
+  {
+   "fieldname": "affected_part",
+   "fieldtype": "Select",
+   "label": "Affected Part",
+   "in_list_view": 1,
+   "columns": 2,
+   "options": "\nLeaf\nStem\nRoot\nFlower\nFruit\nWhole plant\nSoil zone"
+  },
+  {
+   "fieldname": "severity",
+   "fieldtype": "Select",
+   "label": "Severity",
+   "options": "Low\nMedium\nHigh\nCritical",
+   "default": "Medium",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "affected_pct",
+   "fieldtype": "Percent",
+   "label": "Affected Area %",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "since_days",
+   "fieldtype": "Int",
+   "label": "Since (days)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "observed_on",
+   "fieldtype": "Date",
+   "label": "Observed On",
+   "default": "Today"
+  },
+  {
+   "fieldname": "obs_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "observation",
+   "fieldtype": "Small Text",
+   "label": "Symptoms / Observation",
+   "in_list_view": 1,
+   "columns": 3,
+   "description": "Spots, curling, yellowing, cracking, pest seen…"
+  }
+ ],
+ "links": [],
+ "modified": "2026-11-19 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Agrismart Crop Consultancy",
+ "name": "Crop Consultation Problem",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1,
+ "editable_grid": 1
+}

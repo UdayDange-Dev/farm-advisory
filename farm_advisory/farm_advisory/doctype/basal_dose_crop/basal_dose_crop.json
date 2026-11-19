@@ -7,12 +7,22 @@
   "crop_no",
   "crop",
   "variety",
+  "plantation_date",
+  "crop_age",
+  "cb1",
   "row_spacing",
   "plant_spacing",
   "spacing_unit",
-  "cb1",
+  "plot_section",
+  "plot_name",
   "area",
   "area_unit",
+  "area_from_dimensions",
+  "plot_length",
+  "plot_width",
+  "plot_cb",
+  "area_sq_m",
+  "area_acre",
   "plant_count",
   "plants_manual",
   "totals_section",
@@ -50,6 +60,22 @@
    "columns": 1
   },
   {
+   "fieldname": "plantation_date",
+   "fieldtype": "Date",
+   "label": "Planting Date"
+  },
+  {
+   "fieldname": "crop_age",
+   "fieldtype": "Data",
+   "label": "Crop Age",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
    "fieldname": "row_spacing",
    "fieldtype": "Float",
    "label": "Row Spacing",
@@ -75,8 +101,15 @@
    "columns": 1
   },
   {
-   "fieldname": "cb1",
-   "fieldtype": "Column Break"
+   "fieldname": "plot_section",
+   "fieldtype": "Section Break",
+   "label": "Plot"
+  },
+  {
+   "fieldname": "plot_name",
+   "fieldtype": "Data",
+   "label": "Plot / Field Name",
+   "in_list_view": 0
   },
   {
    "fieldname": "area",
@@ -95,6 +128,44 @@
    "default": "Acre",
    "in_list_view": 1,
    "columns": 1
+  },
+  {
+   "fieldname": "area_from_dimensions",
+   "fieldtype": "Check",
+   "label": "Calculate area from length × width",
+   "description": "Length and width are in the spacing unit; the area keeps the area unit."
+  },
+  {
+   "fieldname": "plot_length",
+   "fieldtype": "Float",
+   "label": "Plot Length",
+   "depends_on": "eval:doc.area_from_dimensions",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "plot_width",
+   "fieldtype": "Float",
+   "label": "Plot Width",
+   "depends_on": "eval:doc.area_from_dimensions",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "plot_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "area_sq_m",
+   "fieldtype": "Float",
+   "label": "Area (m²)",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "area_acre",
+   "fieldtype": "Float",
+   "label": "Area (acre)",
+   "read_only": 1,
+   "no_copy": 1
   },
   {
    "fieldname": "plant_count",
@@ -151,7 +222,7 @@
   }
  ],
  "links": [],
- "modified": "2026-10-23 10:00:00.000000",
+ "modified": "2026-11-19 12:00:00.000000",
  "modified_by": "Administrator",
  "module": "Farm Advisory",
  "name": "Basal Dose Crop",

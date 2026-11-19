@@ -144,6 +144,8 @@ function render_crop_cards(frm) {
 			<div class="fa-cc-muted">${__("Add a crop to start this recommendation. Each crop gets its own fertilizer table.")}</div>
 			${add_crop_btn}</div></div>`);
 		bind_crop_cards(frm, field.$wrapper);
+		render_crop_details(frm);
+		render_plot_details(frm);
 		return;
 	}
 
@@ -191,6 +193,7 @@ function render_crop_cards(frm) {
 				</div>
 				${edit ? `<div class="fa-cc-actions">
 					${btn("edit-crop", __("Edit Crop"), "btn-default", no)}
+					${btn("edit-plot", __("Edit Plot"), "btn-default", no)}
 					${btn("template", __("Load Template"), "btn-default", no)}
 					${btn("remove-crop", __("Remove Crop"), "btn-default fa-cc-danger", no)}</div>` : ""}
 			</header>
@@ -250,6 +253,140 @@ function render_crop_cards(frm) {
 		${add_crop_btn ? `<div class="fa-cc-add">${add_crop_btn}</div>` : ""}
 		${purchase_html}${total_html}</div>`);
 	bind_crop_cards(frm, field.$wrapper);
+	render_crop_details(frm);
+	render_plot_details(frm);
+}
+
+// ── Crop Details / Plot Details tabs ──────────────────────────────────
+// Both show the same crop rows as the fertilizer cards, split by subject:
+// what is grown (crop, variety, planting) and where (plot, area, spacing,
+// plants). Figures such as area in m² and the plant count are the server's.
+
+function cc_table(head, rows, empty) {
+	return `<div class="fa-cc-table-wrap"><table class="fa-cc-table">
+		<thead><tr>${head.map(([h, cls]) => `<th class="${cls || ""}">${h}</th>`).join("")}</tr></thead>
+		<tbody>${rows || `<tr><td colspan="${head.length}" class="fa-cc-none">${empty}</td></tr>`}</tbody>
+	</table></div>`;
+}
+
+function render_crop_details(frm) {
+	const field = frm.get_field("crop_details_html");
+	if (!field || !field.$wrapper) return;
+	const edit = crop_cards_editable(frm);
+	const btn = (action, label, data) =>
+		`<button type="button" class="btn btn-xs btn-default" data-action="${action}" ${data}>${label}</button>`;
+	const rows = sorted_crops(frm).map((c) => {
+		const no = `data-crop-no="${c.crop_no}"`;
+		return `<tr>
+			<td class="fa-cc-n">${c.crop_no}</td>
+			<td class="fa-cc-wide fa-cc-strong">${cc_esc(crop_title(c))}</td>
+			<td ${cc_label(__("Variety"))}>${cc_esc(variety_label(c))}</td>
+			<td class="nowrap" ${cc_label(__("Planting Date"))}>${c.plantation_date ? frappe.datetime.str_to_user(c.plantation_date) : "—"}</td>
+			<td ${cc_label(__("Crop Age"))}>${cc_esc(c.crop_age || "—")}</td>
+			${edit ? `<td class="nowrap fa-cc-wide"><div class="fa-cc-row-actions">
+				${btn("edit-crop", __("Edit Crop"), no)}${btn("remove-crop", __("Remove"), no)}</div></td>` : ""}
+		</tr>`;
+	}).join("");
+	const head = [["#"], [__("Crop")], [__("Variety")], [__("Planting Date")], [__("Crop Age")]];
+	if (edit) head.push([""]);
+	field.$wrapper.html(`<div class="fa-cc"><section class="fa-cc-block">
+		<h4>${__("Crops in this Recommendation")}</h4>
+		<p class="fa-cc-muted">${__("Each crop has its own plot (next tab) and its own fertilizer table (last tab). Crop age is counted to the recommendation date.")}</p>
+		${cc_table(head, rows, __("No crops added yet."))}
+		${edit ? `<div><button type="button" class="btn btn-sm btn-primary" data-action="add-crop">
+			${frappe.utils.icon("add", "xs")} ${__("Add Crop")}</button></div>` : ""}
+	</section></div>`);
+	bind_crop_cards(frm, field.$wrapper);
+}
+
+function render_plot_details(frm) {
+	const field = frm.get_field("plot_details_html");
+	if (!field || !field.$wrapper) return;
+	const edit = crop_cards_editable(frm);
+	const rows = sorted_crops(frm).map((c) => {
+		const unit = cc_esc(__(c.spacing_unit || "Feet"));
+		const dims = c.area_from_dimensions && flt(c.plot_length) && flt(c.plot_width)
+			? `${cc_num(c.plot_length, 4)} × ${cc_num(c.plot_width, 4)} ${unit}` : "—";
+		const spacing = flt(c.row_spacing) && flt(c.plant_spacing)
+			? `${cc_num(c.row_spacing, 4)} × ${cc_num(c.plant_spacing, 4)} ${unit}` : "—";
+		const plants = c.plants_manual ? __("{0} (entered)", [cc_num(c.plant_count, 0)])
+			: __("{0} (from area and spacing)", [cc_num(c.plant_count, 0)]);
+		return `<tr>
+			<td class="fa-cc-n">${c.crop_no}</td>
+			<td class="fa-cc-wide"><div class="fa-cc-strong">${cc_esc(crop_title(c))}</div>
+				${c.plot_name ? `<div class="fa-cc-muted">${cc_esc(c.plot_name)}</div>` : ""}</td>
+			<td class="r nowrap" ${cc_label(__("Area"))}>${cc_num(c.area, 4)} ${cc_esc(__(c.area_unit || "Acre"))}</td>
+			<td class="r nowrap" ${cc_label(__("Area (m²)"))}>${cc_num(c.area_sq_m, 2)}</td>
+			<td class="r nowrap" ${cc_label(__("Area (acre)"))}>${cc_num(c.area_acre, 4)}</td>
+			<td class="nowrap" ${cc_label(__("Length × Width"))}>${dims}</td>
+			<td class="nowrap" ${cc_label(__("Spacing (row × plant)"))}>${spacing}</td>
+			<td ${cc_label(__("Plant Count"))}>${plants}</td>
+			${edit ? `<td class="nowrap"><button type="button" class="btn btn-xs btn-default" data-action="edit-plot"
+				data-crop-no="${c.crop_no}">${__("Edit Plot")}</button></td>` : ""}
+		</tr>`;
+	}).join("");
+	const head = [["#"], [__("Crop / Plot")], [__("Area"), "r"], [__("Area (m²)"), "r"], [__("Area (acre)"), "r"],
+		[__("Length × Width")], [__("Spacing (row × plant)")], [__("Plant Count")]];
+	if (edit) head.push([""]);
+	field.$wrapper.html(`<div class="fa-cc"><section class="fa-cc-block">
+		<h4>${__("Plot Measurements")}</h4>
+		<p class="fa-cc-muted">${__("Plants = plot area ÷ (row spacing × plant spacing), to the nearest whole plant. Enter the counted number instead when it is known.")}</p>
+		${cc_table(head, rows, __("Add a crop on the Crop Details tab first."))}
+	</section></div>`);
+	bind_crop_cards(frm, field.$wrapper);
+}
+
+function plot_dialog(frm, c) {
+	const d = new frappe.ui.Dialog({
+		title: __("Plot — Crop {0} ({1})", [c.crop_no, crop_title(c)]),
+		fields: [
+			{ fieldname: "plot_name", fieldtype: "Data", label: __("Plot / Field Name"), default: c.plot_name },
+			{ fieldtype: "Section Break", label: __("Area") },
+			{ fieldname: "area_from_dimensions", fieldtype: "Check", label: __("Calculate area from length × width"),
+			  default: c.area_from_dimensions },
+			{ fieldname: "area", fieldtype: "Float", label: __("Area"), default: c.area, non_negative: 1,
+			  read_only_depends_on: "eval:doc.area_from_dimensions" },
+			{ fieldname: "plot_length", fieldtype: "Float", label: __("Plot Length"), default: c.plot_length,
+			  non_negative: 1, depends_on: "eval:doc.area_from_dimensions" },
+			{ fieldtype: "Column Break" },
+			{ fieldname: "area_unit", fieldtype: "Select", label: __("Area Unit"),
+			  options: select_options(BASAL_CROP_DF("area_unit")), default: c.area_unit },
+			{ fieldname: "plot_width", fieldtype: "Float", label: __("Plot Width"), default: c.plot_width,
+			  non_negative: 1, depends_on: "eval:doc.area_from_dimensions",
+			  description: __("Length and width use the spacing unit below.") },
+			{ fieldtype: "Section Break", label: __("Spacing") },
+			{ fieldname: "row_spacing", fieldtype: "Float", label: __("Row Spacing"), default: c.row_spacing, non_negative: 1 },
+			{ fieldname: "plant_spacing", fieldtype: "Float", label: __("Plant Spacing"), default: c.plant_spacing,
+			  non_negative: 1 },
+			{ fieldtype: "Column Break" },
+			{ fieldname: "spacing_unit", fieldtype: "Select", label: __("Spacing Unit"),
+			  options: select_options(BASAL_CROP_DF("spacing_unit")), default: c.spacing_unit },
+			{ fieldtype: "Section Break", label: __("Plants") },
+			{ fieldname: "plants_manual", fieldtype: "Check", label: __("Enter the plant count manually"),
+			  default: c.plants_manual },
+			{ fieldname: "plant_count", fieldtype: "Int", label: __("Plant Count"), default: c.plant_count,
+			  depends_on: "eval:doc.plants_manual", non_negative: 1,
+			  description: __("Otherwise it is calculated from the area and spacing.") },
+		],
+		primary_action_label: __("Apply"),
+		primary_action(v) {
+			if (v.area_from_dimensions && !(flt(v.plot_length) > 0 && flt(v.plot_width) > 0)) {
+				frappe.msgprint(__("Enter both plot length and width, or untick the length × width option."));
+				return;
+			}
+			d.hide();
+			Object.assign(c, {
+				plot_name: v.plot_name || "", area_from_dimensions: cint(v.area_from_dimensions),
+				plot_length: flt(v.plot_length), plot_width: flt(v.plot_width),
+				area: flt(v.area), area_unit: v.area_unit,
+				row_spacing: flt(v.row_spacing), plant_spacing: flt(v.plant_spacing), spacing_unit: v.spacing_unit,
+				plants_manual: cint(v.plants_manual),
+			});
+			if (c.plants_manual) c.plant_count = cint(v.plant_count);
+			changed(frm, "crops");
+		},
+	});
+	d.show();
 }
 
 function bind_crop_cards(frm, $wrapper) {
@@ -260,6 +397,7 @@ function bind_crop_cards(frm, $wrapper) {
 		({
 			"add-crop": () => prompt_add_crop(frm),
 			"edit-crop": () => crop && crop_dialog(frm, crop),
+			"edit-plot": () => crop && plot_dialog(frm, crop),
 			"template": () => crop && load_crop_template(frm, crop),
 			"remove-crop": () => crop && remove_crop(frm, crop),
 			"add-fert": () => crop && fertilizer_dialog(frm, crop, null),
@@ -287,28 +425,14 @@ function crop_dialog(frm, c) {
 			{ fieldname: "variety", fieldtype: "Link", options: "Farm Crop Variety", label: __("Variety"),
 			  default: c.variety,
 			  get_query: () => ({ filters: { crop: d.get_value("crop") || "", used_in_basal: 1 } }) },
-			{ fieldtype: "Section Break", label: __("Area") },
-			{ fieldname: "area", fieldtype: "Float", label: __("Area"), default: c.area, non_negative: 1 },
-			{ fieldtype: "Column Break" },
-			{ fieldname: "area_unit", fieldtype: "Select", label: __("Area Unit"),
-			  options: select_options(BASAL_CROP_DF("area_unit")), default: c.area_unit },
-			{ fieldtype: "Section Break", label: __("Spacing") },
-			{ fieldname: "row_spacing", fieldtype: "Float", label: __("Row Spacing"), default: c.row_spacing, non_negative: 1 },
-			{ fieldname: "plant_spacing", fieldtype: "Float", label: __("Plant Spacing"), default: c.plant_spacing,
-			  non_negative: 1 },
-			{ fieldtype: "Column Break" },
-			{ fieldname: "spacing_unit", fieldtype: "Select", label: __("Spacing Unit"),
-			  options: select_options(BASAL_CROP_DF("spacing_unit")), default: c.spacing_unit },
-			{ fieldtype: "Section Break", label: __("Plants") },
-			{ fieldname: "plants_manual", fieldtype: "Check", label: __("Enter the plant count manually"),
-			  default: c.plants_manual },
-			{ fieldname: "plant_count", fieldtype: "Int", label: __("Plant Count"), default: c.plant_count,
-			  depends_on: "eval:doc.plants_manual", non_negative: 1,
-			  description: __("Otherwise it is calculated from the area and spacing.") },
+			{ fieldname: "plantation_date", fieldtype: "Date", label: __("Planting Date"), default: c.plantation_date },
+			{ fieldtype: "HTML", options: `<p class="text-muted small">${__(
+				"Area, spacing and plant count are on the Plot Details tab (Edit Plot).")}</p>` },
 		],
 		primary_action_label: __("Apply"),
 		primary_action(v) {
 			d.hide();
+			c.plantation_date = v.plantation_date || "";
 			if (v.crop !== c.crop) {
 				// a new crop starts from its own defaults and template, as when it was first added
 				c.crop = v.crop;
@@ -316,12 +440,7 @@ function crop_dialog(frm, c) {
 				apply_crop(frm, c);
 				return;
 			}
-			Object.assign(c, {
-				variety: v.variety || "", area: flt(v.area), area_unit: v.area_unit,
-				row_spacing: flt(v.row_spacing), plant_spacing: flt(v.plant_spacing), spacing_unit: v.spacing_unit,
-				plants_manual: cint(v.plants_manual),
-			});
-			if (c.plants_manual) c.plant_count = cint(v.plant_count);
+			c.variety = v.variety || "";
 			changed(frm, "crops");
 		},
 	});
@@ -549,6 +668,7 @@ frappe.ui.form.on("Basal Dose Recommendation", {
 			filters: { crop: locals[cdt][cdn].crop || "", used_in_basal: 1 },
 		}));
 		frm.set_query("fertilizer", "fertilizers", () => ({ filters: { is_active: 1 } }));
+		farm_advisory.setup_address_query(frm);
 	},
 
 	onload(frm) {
@@ -644,9 +764,11 @@ frappe.ui.form.on("Basal Dose Recommendation", {
 	},
 
 	customer(frm) { farm_advisory.fill_from_customer(frm); },
+	customer_address(frm) { farm_advisory.fill_address(frm); },
 	mobile_no(frm) { farm_advisory.sync_whatsapp(frm); },
 	whatsapp_same_as_mobile(frm) { farm_advisory.sync_whatsapp(frm); },
 	bag_rounding: basal_recalc,
+	posting_date: basal_recalc,
 	first_name: basal_recalc,
 	middle_name: basal_recalc,
 	last_name: basal_recalc,
@@ -688,6 +810,10 @@ frappe.ui.form.on("Basal Dose Crop", {
 	spacing_unit: basal_recalc,
 	area: basal_recalc,
 	area_unit: basal_recalc,
+	plantation_date: basal_recalc,
+	area_from_dimensions: basal_recalc,
+	plot_length: basal_recalc,
+	plot_width: basal_recalc,
 	plant_count(frm, cdt, cdn) {
 		// typed by a person (the preview writes silently) → manual, as in the prototype
 		const row = locals[cdt][cdn];

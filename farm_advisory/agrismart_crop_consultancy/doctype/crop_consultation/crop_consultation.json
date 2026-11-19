@@ -1,0 +1,1177 @@
+{
+ "actions": [],
+ "creation": "2026-11-19 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "visit_tab",
+  "naming_series",
+  "visit_date",
+  "consultant",
+  "visit_cb",
+  "branch",
+  "report_language",
+  "visit_cb2",
+  "status",
+  "next_visit",
+  "farmer_section",
+  "customer",
+  "first_name",
+  "middle_name",
+  "last_name",
+  "farmer_name",
+  "farmer_cb1",
+  "village",
+  "taluka",
+  "district",
+  "state",
+  "pin_code",
+  "landmark",
+  "farmer_cb2",
+  "mobile_no",
+  "whatsapp_same_as_mobile",
+  "whatsapp_no",
+  "email_id",
+  "address_section",
+  "customer_address",
+  "address_cb",
+  "address_display",
+  "gps_section",
+  "latitude",
+  "longitude",
+  "gps_cb",
+  "gps_accuracy",
+  "gps_captured_on",
+  "gps_map",
+  "farm_tab",
+  "farm_area_section",
+  "farm_area_unit",
+  "total_area",
+  "irrigated_area",
+  "non_irrigated_area",
+  "farm_area_cb",
+  "area_7_12",
+  "area_8a",
+  "family_area",
+  "farm_area_cb2",
+  "crop_area_total",
+  "landholder_area_total",
+  "total_plants",
+  "data_checks",
+  "crop_blocks_section",
+  "crop_blocks",
+  "crop_summary",
+  "landholders_section",
+  "landholders",
+  "documents_section",
+  "farm_map",
+  "seven_twelve",
+  "eight_a",
+  "documents_cb",
+  "soil_test_report",
+  "water_test_report",
+  "other_document",
+  "water_tab",
+  "water_sources_section",
+  "water_sources",
+  "pumps_section",
+  "pumps",
+  "drip_section",
+  "drip_area",
+  "drip_company",
+  "drip_type",
+  "drip_cb",
+  "dripper_lph",
+  "pressure_compensating",
+  "operating_pressure",
+  "drip_cb2",
+  "filtration",
+  "fertigation",
+  "automation",
+  "drip_notes",
+  "water_quality_section",
+  "water_ph",
+  "water_ec",
+  "wq_cb",
+  "water_tds",
+  "water_bicarbonate",
+  "wq_cb2",
+  "water_chloride",
+  "water_sodium",
+  "infrastructure_section",
+  "infrastructure",
+  "diagnosis_tab",
+  "problems_section",
+  "problems",
+  "problem_count",
+  "max_severity",
+  "history_section",
+  "last_pesticide",
+  "last_fertilizer",
+  "last_irrigation",
+  "history_cb",
+  "recent_rainfall",
+  "previous_pest_disease",
+  "photos_section",
+  "photos",
+  "satellite_tab",
+  "satyukt_section",
+  "satyukt_linked",
+  "satyukt_farm_id",
+  "satyukt_cb",
+  "satellite_data_date",
+  "satellite_import",
+  "ndvi_section",
+  "ndvi_readings",
+  "ndvi_latest",
+  "ndvi_change",
+  "ndvi_status",
+  "ndvi_chart",
+  "soil_section",
+  "soil_n",
+  "soil_p",
+  "soil_k",
+  "soil_cb",
+  "soil_organic_carbon",
+  "soil_ph",
+  "soil_moisture",
+  "soil_cb2",
+  "pest_risk",
+  "weather_section",
+  "rain_probability",
+  "wind_speed",
+  "weather_cb",
+  "humidity",
+  "temperature",
+  "weather_cb2",
+  "spray_decision",
+  "advisory_tab",
+  "advisory_section",
+  "advisory_html",
+  "irrigation_section",
+  "irr_block_no",
+  "irr_drippers_per_plant",
+  "irr_total_drippers",
+  "irr_cb",
+  "irr_hours",
+  "irr_required_per_plant",
+  "irr_cb2",
+  "irr_dripper_count",
+  "irr_flow_lph",
+  "irr_water_l",
+  "irr_water_per_plant",
+  "irr_depth_mm",
+  "irr_status",
+  "prescription_section",
+  "agronomist",
+  "reference_id",
+  "prescription_items",
+  "agronomic_notes",
+  "followup_section",
+  "followup_plan",
+  "followups"
+ ],
+ "fields": [
+  {
+   "fieldname": "visit_tab",
+   "fieldtype": "Tab Break",
+   "label": "Visit & Farmer"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "CCV-.YYYY.-",
+   "default": "CCV-.YYYY.-",
+   "reqd": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "visit_date",
+   "fieldtype": "Date",
+   "label": "Visit Date",
+   "default": "Today",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "consultant",
+   "fieldtype": "Data",
+   "label": "Agrismart Consultant"
+  },
+  {
+   "fieldname": "visit_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "report_language",
+   "fieldtype": "Select",
+   "label": "Language / भाषा",
+   "options": "English + Marathi\nEnglish\nMarathi",
+   "default": "English + Marathi"
+  },
+  {
+   "fieldname": "visit_cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Prescription Status",
+   "options": "Draft\nAgronomist Approved\nIssued to Farmer",
+   "default": "Draft",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "next_visit",
+   "fieldtype": "Date",
+   "label": "Next Visit"
+  },
+  {
+   "fieldname": "farmer_section",
+   "fieldtype": "Section Break",
+   "label": "Farmer Details"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer Name",
+   "options": "Customer",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "First Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "middle_name",
+   "fieldtype": "Data",
+   "label": "Middle Name"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "farmer_name",
+   "fieldtype": "Data",
+   "label": "Farmer Name",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "farmer_cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "village",
+   "fieldtype": "Link",
+   "label": "Village",
+   "options": "Farm Village",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "taluka",
+   "fieldtype": "Link",
+   "label": "Taluka",
+   "options": "Farm Taluka"
+  },
+  {
+   "fieldname": "district",
+   "fieldtype": "Link",
+   "label": "District",
+   "options": "Farm District"
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Link",
+   "label": "State",
+   "options": "Farm State",
+   "default": "Maharashtra"
+  },
+  {
+   "fieldname": "pin_code",
+   "fieldtype": "Data",
+   "label": "PIN Code"
+  },
+  {
+   "fieldname": "landmark",
+   "fieldtype": "Data",
+   "label": "Landmark"
+  },
+  {
+   "fieldname": "farmer_cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "mobile_no",
+   "fieldtype": "Data",
+   "label": "Mobile Number",
+   "options": "Phone",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "whatsapp_same_as_mobile",
+   "fieldtype": "Check",
+   "label": "WhatsApp same as mobile number",
+   "default": "1"
+  },
+  {
+   "fieldname": "whatsapp_no",
+   "fieldtype": "Data",
+   "label": "WhatsApp Number",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "email_id",
+   "fieldtype": "Data",
+   "label": "Email ID",
+   "options": "Email"
+  },
+  {
+   "fieldname": "address_section",
+   "fieldtype": "Section Break",
+   "label": "Address"
+  },
+  {
+   "fieldname": "customer_address",
+   "fieldtype": "Link",
+   "label": "Customer Address",
+   "options": "Address",
+   "description": "Fetched from the farmer's primary ERPNext Address; pick another linked address if needed."
+  },
+  {
+   "fieldname": "address_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "address_display",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "gps_section",
+   "fieldtype": "Section Break",
+   "label": "GPS Farm Location",
+   "description": "Capture while physically at the farm."
+  },
+  {
+   "fieldname": "latitude",
+   "fieldtype": "Float",
+   "label": "Latitude",
+   "precision": "6"
+  },
+  {
+   "fieldname": "longitude",
+   "fieldtype": "Float",
+   "label": "Longitude",
+   "precision": "6"
+  },
+  {
+   "fieldname": "gps_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "gps_accuracy",
+   "fieldtype": "Float",
+   "label": "Accuracy (m)",
+   "precision": "1"
+  },
+  {
+   "fieldname": "gps_captured_on",
+   "fieldtype": "Datetime",
+   "label": "Captured On"
+  },
+  {
+   "fieldname": "gps_map",
+   "fieldtype": "HTML",
+   "label": "Map"
+  },
+  {
+   "fieldname": "farm_tab",
+   "fieldtype": "Tab Break",
+   "label": "Farm & Crops"
+  },
+  {
+   "fieldname": "farm_area_section",
+   "fieldtype": "Section Break",
+   "label": "Farm Area",
+   "description": "Total = Irrigated + Non-irrigated"
+  },
+  {
+   "fieldname": "farm_area_unit",
+   "fieldtype": "Select",
+   "label": "Area Unit",
+   "options": "Acre\nGuntha\nHectare",
+   "default": "Acre"
+  },
+  {
+   "fieldname": "total_area",
+   "fieldtype": "Float",
+   "label": "Total Area",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "irrigated_area",
+   "fieldtype": "Float",
+   "label": "Irrigated",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "non_irrigated_area",
+   "fieldtype": "Float",
+   "label": "Non-irrigated",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "farm_area_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "area_7_12",
+   "fieldtype": "Float",
+   "label": "Area per 7/12",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "area_8a",
+   "fieldtype": "Float",
+   "label": "Area per 8A",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "family_area",
+   "fieldtype": "Float",
+   "label": "Total Family Area",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "farm_area_cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "crop_area_total",
+   "fieldtype": "Float",
+   "label": "Crop-block Area",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "landholder_area_total",
+   "fieldtype": "Float",
+   "label": "Landholders' Area",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "total_plants",
+   "fieldtype": "Int",
+   "label": "Total Plants",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "data_checks",
+   "fieldtype": "HTML",
+   "label": "Data Checks"
+  },
+  {
+   "fieldname": "crop_blocks_section",
+   "fieldtype": "Section Break",
+   "label": "Crop Blocks",
+   "description": "One block per crop / variety / age group."
+  },
+  {
+   "fieldname": "crop_blocks",
+   "fieldtype": "Table",
+   "label": "Crop Blocks",
+   "options": "Crop Consultation Block"
+  },
+  {
+   "fieldname": "crop_summary",
+   "fieldtype": "Data",
+   "label": "Crops",
+   "read_only": 1,
+   "no_copy": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "landholders_section",
+   "fieldtype": "Section Break",
+   "label": "Family Landholders / Co-owners",
+   "collapsible": 1,
+   "description": "Useful for DPR, NHB, PMKSY and bank documents."
+  },
+  {
+   "fieldname": "landholders",
+   "fieldtype": "Table",
+   "label": "Landholders",
+   "options": "Crop Consultation Landholder"
+  },
+  {
+   "fieldname": "documents_section",
+   "fieldtype": "Section Break",
+   "label": "Maps & Land Documents",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "farm_map",
+   "fieldtype": "Attach",
+   "label": "Farm Map"
+  },
+  {
+   "fieldname": "seven_twelve",
+   "fieldtype": "Attach",
+   "label": "7/12 Extract"
+  },
+  {
+   "fieldname": "eight_a",
+   "fieldtype": "Attach",
+   "label": "8A Record"
+  },
+  {
+   "fieldname": "documents_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "soil_test_report",
+   "fieldtype": "Attach",
+   "label": "Soil Test Report"
+  },
+  {
+   "fieldname": "water_test_report",
+   "fieldtype": "Attach",
+   "label": "Water Test Report"
+  },
+  {
+   "fieldname": "other_document",
+   "fieldtype": "Attach",
+   "label": "Other (lease, invoice…)"
+  },
+  {
+   "fieldname": "water_tab",
+   "fieldtype": "Tab Break",
+   "label": "Water & Assets"
+  },
+  {
+   "fieldname": "water_sources_section",
+   "fieldtype": "Section Break",
+   "label": "Irrigation Sources"
+  },
+  {
+   "fieldname": "water_sources",
+   "fieldtype": "Table",
+   "label": "Irrigation Sources",
+   "options": "Crop Consultation Water Source"
+  },
+  {
+   "fieldname": "pumps_section",
+   "fieldtype": "Section Break",
+   "label": "Electric Pumps"
+  },
+  {
+   "fieldname": "pumps",
+   "fieldtype": "Table",
+   "label": "Pumps",
+   "options": "Crop Consultation Pump"
+  },
+  {
+   "fieldname": "drip_section",
+   "fieldtype": "Section Break",
+   "label": "Drip / Irrigation System"
+  },
+  {
+   "fieldname": "drip_area",
+   "fieldtype": "Float",
+   "label": "Area under Drip (acre)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "drip_company",
+   "fieldtype": "Select",
+   "label": "Company",
+   "options": "\nNetafim\nJain Irrigation\nMahindra EPC\nOther"
+  },
+  {
+   "fieldname": "drip_type",
+   "fieldtype": "Select",
+   "label": "Type",
+   "options": "\nInline\nOnline\nSubsurface\nOther"
+  },
+  {
+   "fieldname": "drip_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dripper_lph",
+   "fieldtype": "Float",
+   "label": "Dripper Discharge (LPH)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "pressure_compensating",
+   "fieldtype": "Select",
+   "label": "Pressure-compensating",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "operating_pressure",
+   "fieldtype": "Float",
+   "label": "Operating Pressure (bar)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "drip_cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "filtration",
+   "fieldtype": "Data",
+   "label": "Filtration (sand / screen / hydrocyclone)"
+  },
+  {
+   "fieldname": "fertigation",
+   "fieldtype": "Select",
+   "label": "Fertigation",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "automation",
+   "fieldtype": "Select",
+   "label": "Automation",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "drip_notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "water_quality_section",
+   "fieldtype": "Section Break",
+   "label": "Water Quality",
+   "description": "From the water test report."
+  },
+  {
+   "fieldname": "water_ph",
+   "fieldtype": "Float",
+   "label": "pH",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "water_ec",
+   "fieldtype": "Float",
+   "label": "EC (dS/m)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "wq_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "water_tds",
+   "fieldtype": "Float",
+   "label": "TDS (ppm)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "water_bicarbonate",
+   "fieldtype": "Float",
+   "label": "Bicarbonate (ppm)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "wq_cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "water_chloride",
+   "fieldtype": "Float",
+   "label": "Chloride (ppm)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "water_sodium",
+   "fieldtype": "Float",
+   "label": "Sodium (ppm)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "infrastructure_section",
+   "fieldtype": "Section Break",
+   "label": "Infrastructure & Machinery",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "infrastructure",
+   "fieldtype": "Table",
+   "label": "Infrastructure",
+   "options": "Crop Consultation Infrastructure"
+  },
+  {
+   "fieldname": "diagnosis_tab",
+   "fieldtype": "Tab Break",
+   "label": "Diagnosis"
+  },
+  {
+   "fieldname": "problems_section",
+   "fieldtype": "Section Break",
+   "label": "Diagnosis Cases",
+   "description": "Record evidence first — then diagnose."
+  },
+  {
+   "fieldname": "problems",
+   "fieldtype": "Table",
+   "label": "Diagnosis Cases",
+   "options": "Crop Consultation Problem"
+  },
+  {
+   "fieldname": "problem_count",
+   "fieldtype": "Int",
+   "label": "Diagnosis Cases",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "max_severity",
+   "fieldtype": "Select",
+   "label": "Highest Severity",
+   "options": "\nLow\nMedium\nHigh\nCritical",
+   "read_only": 1,
+   "no_copy": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "history_section",
+   "fieldtype": "Section Break",
+   "label": "Recent History"
+  },
+  {
+   "fieldname": "last_pesticide",
+   "fieldtype": "Data",
+   "label": "Last Insecticide / Fungicide"
+  },
+  {
+   "fieldname": "last_fertilizer",
+   "fieldtype": "Data",
+   "label": "Last Fertilizer / Micronutrient"
+  },
+  {
+   "fieldname": "last_irrigation",
+   "fieldtype": "Data",
+   "label": "Last Irrigation"
+  },
+  {
+   "fieldname": "history_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "recent_rainfall",
+   "fieldtype": "Data",
+   "label": "Recent Rainfall"
+  },
+  {
+   "fieldname": "previous_pest_disease",
+   "fieldtype": "Data",
+   "label": "Previous Pest / Disease"
+  },
+  {
+   "fieldname": "photos_section",
+   "fieldtype": "Section Break",
+   "label": "Photos",
+   "description": "Whole plant, leaf, fruit, stem, root zone, soil, pest close-up. AI may assist; the agronomist decides."
+  },
+  {
+   "fieldname": "photos",
+   "fieldtype": "Table",
+   "label": "Photos",
+   "options": "Crop Consultation Photo"
+  },
+  {
+   "fieldname": "satellite_tab",
+   "fieldtype": "Tab Break",
+   "label": "Satellite (Satyukt)"
+  },
+  {
+   "fieldname": "satyukt_section",
+   "fieldtype": "Section Break",
+   "label": "Satyukt Link",
+   "description": "Satellite estimates are advisory and can differ from laboratory results; cross-check with field observation and soil / water tests."
+  },
+  {
+   "fieldname": "satyukt_linked",
+   "fieldtype": "Check",
+   "label": "Linked to Satyukt"
+  },
+  {
+   "fieldname": "satyukt_farm_id",
+   "fieldtype": "Data",
+   "label": "Satyukt Farm ID"
+  },
+  {
+   "fieldname": "satyukt_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "satellite_data_date",
+   "fieldtype": "Date",
+   "label": "Last Data Date"
+  },
+  {
+   "fieldname": "satellite_import",
+   "fieldtype": "Button",
+   "label": "Import Satyukt JSON"
+  },
+  {
+   "fieldname": "ndvi_section",
+   "fieldtype": "Section Break",
+   "label": "Crop Health (NDVI) Trend"
+  },
+  {
+   "fieldname": "ndvi_readings",
+   "fieldtype": "Table",
+   "label": "NDVI Readings",
+   "options": "Crop Consultation NDVI"
+  },
+  {
+   "fieldname": "ndvi_latest",
+   "fieldtype": "Float",
+   "label": "Latest NDVI",
+   "precision": "3",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "ndvi_change",
+   "fieldtype": "Float",
+   "label": "Change vs Previous",
+   "precision": "3",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "ndvi_status",
+   "fieldtype": "Select",
+   "label": "Crop Health",
+   "options": "\nHealthy / stable\nModerate stress\nStress detected",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "ndvi_chart",
+   "fieldtype": "HTML",
+   "label": "NDVI Chart"
+  },
+  {
+   "fieldname": "soil_section",
+   "fieldtype": "Section Break",
+   "label": "Soil Intelligence",
+   "description": "Satellite estimate — verify with a soil test."
+  },
+  {
+   "fieldname": "soil_n",
+   "fieldtype": "Select",
+   "label": "Nitrogen (N)",
+   "options": "\nLow\nMedium\nHigh"
+  },
+  {
+   "fieldname": "soil_p",
+   "fieldtype": "Select",
+   "label": "Phosphorus (P)",
+   "options": "\nLow\nMedium\nHigh"
+  },
+  {
+   "fieldname": "soil_k",
+   "fieldtype": "Select",
+   "label": "Potassium (K)",
+   "options": "\nLow\nMedium\nHigh"
+  },
+  {
+   "fieldname": "soil_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "soil_organic_carbon",
+   "fieldtype": "Select",
+   "label": "Organic Carbon",
+   "options": "\nLow\nMedium\nHigh"
+  },
+  {
+   "fieldname": "soil_ph",
+   "fieldtype": "Float",
+   "label": "Soil pH",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "soil_moisture",
+   "fieldtype": "Select",
+   "label": "Soil Moisture",
+   "options": "\nLow\nMedium\nHigh"
+  },
+  {
+   "fieldname": "soil_cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pest_risk",
+   "fieldtype": "Select",
+   "label": "Pest / Disease Risk",
+   "options": "\nLow\nModerate\nHigh\nVery High"
+  },
+  {
+   "fieldname": "weather_section",
+   "fieldtype": "Section Break",
+   "label": "Weather (next 24–48 h)",
+   "description": "From the Satyukt 14-day forecast or a local station."
+  },
+  {
+   "fieldname": "rain_probability",
+   "fieldtype": "Percent",
+   "label": "Rain Probability %"
+  },
+  {
+   "fieldname": "wind_speed",
+   "fieldtype": "Float",
+   "label": "Wind (km/h)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "weather_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "humidity",
+   "fieldtype": "Percent",
+   "label": "Humidity %"
+  },
+  {
+   "fieldname": "temperature",
+   "fieldtype": "Float",
+   "label": "Temperature °C"
+  },
+  {
+   "fieldname": "weather_cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "spray_decision",
+   "fieldtype": "Select",
+   "label": "Spray Decision",
+   "options": "\nSuitable\nSpray with caution\nDo not spray",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "advisory_tab",
+   "fieldtype": "Tab Break",
+   "label": "Advisory & Prescription"
+  },
+  {
+   "fieldname": "advisory_section",
+   "fieldtype": "Section Break",
+   "label": "Advisory Engine",
+   "description": "Evidence → possible causes → checks → prescription by the agronomist. Chemicals are never auto-selected."
+  },
+  {
+   "fieldname": "advisory_html",
+   "fieldtype": "HTML",
+   "label": "Advisory"
+  },
+  {
+   "fieldname": "irrigation_section",
+   "fieldtype": "Section Break",
+   "label": "Irrigation Calculator",
+   "collapsible": 1,
+   "description": "Uses the chosen crop block and the dripper discharge (Water & Assets)."
+  },
+  {
+   "fieldname": "irr_block_no",
+   "fieldtype": "Int",
+   "label": "Crop Block No.",
+   "default": "1"
+  },
+  {
+   "fieldname": "irr_drippers_per_plant",
+   "fieldtype": "Float",
+   "label": "Drippers per Plant",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "irr_total_drippers",
+   "fieldtype": "Float",
+   "label": "OR Total Drippers",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "irr_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "irr_hours",
+   "fieldtype": "Float",
+   "label": "Hours per Irrigation",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "irr_required_per_plant",
+   "fieldtype": "Float",
+   "label": "Required L / Plant / Irrigation (optional)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "irr_cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "irr_dripper_count",
+   "fieldtype": "Float",
+   "label": "Total Drippers Used",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "irr_flow_lph",
+   "fieldtype": "Float",
+   "label": "Flow (L / hour)",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "irr_water_l",
+   "fieldtype": "Float",
+   "label": "Water per Irrigation (L)",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "irr_water_per_plant",
+   "fieldtype": "Float",
+   "label": "Per Plant (L)",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "irr_depth_mm",
+   "fieldtype": "Float",
+   "label": "Depth over Block (mm)",
+   "precision": "3",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "irr_status",
+   "fieldtype": "Data",
+   "label": "Irrigation Check",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "prescription_section",
+   "fieldtype": "Section Break",
+   "label": "Prescription (Agronomist)",
+   "description": "Products are chosen and dosed by the agronomist per label and local recommendation — never auto-released from AI."
+  },
+  {
+   "fieldname": "agronomist",
+   "fieldtype": "Data",
+   "label": "Approving Agronomist"
+  },
+  {
+   "fieldname": "reference_id",
+   "fieldtype": "Data",
+   "label": "Reference ID"
+  },
+  {
+   "fieldname": "prescription_items",
+   "fieldtype": "Table",
+   "label": "Products / Fertilizers",
+   "options": "Crop Consultation Prescription"
+  },
+  {
+   "fieldname": "agronomic_notes",
+   "fieldtype": "Small Text",
+   "label": "Agronomic Notes, Irrigation & Non-chemical Actions"
+  },
+  {
+   "fieldname": "followup_section",
+   "fieldtype": "Section Break",
+   "label": "Follow-up Log",
+   "description": "Suggested: Day 3, 7, 15, 30 after the visit."
+  },
+  {
+   "fieldname": "followup_plan",
+   "fieldtype": "HTML",
+   "label": "Suggested Follow-ups"
+  },
+  {
+   "fieldname": "followups",
+   "fieldtype": "Table",
+   "label": "Follow-ups",
+   "options": "Crop Consultation Follow Up"
+  }
+ ],
+ "links": [],
+ "modified": "2026-11-19 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Agrismart Crop Consultancy",
+ "name": "Crop Consultation",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "Farm Advisory Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "Farm Advisor",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "naming_series:",
+ "title_field": "farmer_name",
+ "show_title_field_in_link": 1,
+ "search_fields": "farmer_name,mobile_no,village",
+ "track_changes": 1,
+ "default_print_format": "Crop Consultation Report"
+}

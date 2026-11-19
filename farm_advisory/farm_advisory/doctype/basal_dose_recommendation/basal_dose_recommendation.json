@@ -8,7 +8,6 @@
   "naming_series",
   "posting_date",
   "header_cb",
-  "bag_rounding",
   "farmer_section",
   "customer",
   "first_name",
@@ -26,11 +25,23 @@
   "whatsapp_same_as_mobile",
   "whatsapp_no",
   "email_id",
-  "crops_tab",
-  "crop_cards_section",
-  "crop_cards",
+  "address_section",
+  "customer_address",
+  "address_cb",
+  "address_display",
+  "crop_details_tab",
+  "crop_details_section",
+  "crop_details_html",
   "crops_section",
   "crops",
+  "plot_details_tab",
+  "plot_details_section",
+  "plot_details_html",
+  "crops_tab",
+  "fertilizer_settings_section",
+  "bag_rounding",
+  "crop_cards_section",
+  "crop_cards",
   "fertilizers_section",
   "fertilizers",
   "summary_section",
@@ -46,7 +57,7 @@
   {
    "fieldname": "farmer_tab",
    "fieldtype": "Tab Break",
-   "label": "Farmer"
+   "label": "Farmer Details"
   },
   {
    "fieldname": "naming_series",
@@ -68,13 +79,6 @@
   {
    "fieldname": "header_cb",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "bag_rounding",
-   "fieldtype": "Select",
-   "label": "Bag Quantity Rounding",
-   "options": "Round up (full bags)\nNearest bag (like Excel)\nNo rounding (exact)",
-   "default": "Round up (full bags)"
   },
   {
    "fieldname": "farmer_section",
@@ -185,20 +189,41 @@
    "options": "Email"
   },
   {
-   "fieldname": "crops_tab",
-   "fieldtype": "Tab Break",
-   "label": "Crops & Fertilizers"
-  },
-  {
-   "fieldname": "crop_cards_section",
+   "fieldname": "address_section",
    "fieldtype": "Section Break",
-   "label": "Crop Recommendations",
-   "description": "Each crop is calculated on its own: its area, plant count and fertilizer rows never change another crop."
+   "label": "Address"
   },
   {
-   "fieldname": "crop_cards",
+   "fieldname": "customer_address",
+   "fieldtype": "Link",
+   "label": "Customer Address",
+   "options": "Address",
+   "description": "Fetched from the farmer's primary ERPNext Address; pick another linked address if needed."
+  },
+  {
+   "fieldname": "address_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "address_display",
+   "fieldtype": "Small Text",
+   "label": "Address",
+   "description": "Editable. Without a linked Address it is built from Village, Taluka, District, State and PIN."
+  },
+  {
+   "fieldname": "crop_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Crop Details"
+  },
+  {
+   "fieldname": "crop_details_section",
+   "fieldtype": "Section Break",
+   "label": "Crops"
+  },
+  {
+   "fieldname": "crop_details_html",
    "fieldtype": "HTML",
-   "label": "Crop Recommendations"
+   "label": "Crop Details"
   },
   {
    "fieldname": "crops_section",
@@ -212,6 +237,49 @@
    "fieldtype": "Table",
    "label": "Crops",
    "options": "Basal Dose Crop"
+  },
+  {
+   "fieldname": "plot_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Plot Details"
+  },
+  {
+   "fieldname": "plot_details_section",
+   "fieldtype": "Section Break",
+   "label": "Plots"
+  },
+  {
+   "fieldname": "plot_details_html",
+   "fieldtype": "HTML",
+   "label": "Plot Details"
+  },
+  {
+   "fieldname": "crops_tab",
+   "fieldtype": "Tab Break",
+   "label": "Fertilizer Recommendation"
+  },
+  {
+   "fieldname": "fertilizer_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Calculation Settings"
+  },
+  {
+   "fieldname": "bag_rounding",
+   "fieldtype": "Select",
+   "label": "Bag Quantity Rounding",
+   "options": "Round up (full bags)\nNearest bag (like Excel)\nNo rounding (exact)",
+   "default": "Round up (full bags)"
+  },
+  {
+   "fieldname": "crop_cards_section",
+   "fieldtype": "Section Break",
+   "label": "Crop-wise Fertilizer Recommendation",
+   "description": "Each crop is calculated on its own: its area, plant count and fertilizer rows never change another crop."
+  },
+  {
+   "fieldname": "crop_cards",
+   "fieldtype": "HTML",
+   "label": "Crop Recommendations"
   },
   {
    "fieldname": "fertilizers_section",
@@ -277,7 +345,7 @@
   }
  ],
  "links": [],
- "modified": "2026-11-02 14:00:00.000000",
+ "modified": "2026-11-19 12:00:00.000000",
  "modified_by": "Administrator",
  "module": "Farm Advisory",
  "name": "Basal Dose Recommendation",

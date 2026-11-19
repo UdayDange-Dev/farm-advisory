@@ -53,6 +53,20 @@ class FarmerMixin:
 			self.pin_code = re.sub(r"\D", "", str(self.pin_code))
 			if len(self.pin_code) != 6:
 				frappe.throw(_("PIN Code must be 6 digits."), title=_("Invalid PIN Code"))
+		self.validate_customer_address()
+
+	def validate_customer_address(self):
+		"""The chosen Address must belong to the chosen Customer."""
+		address = self.get("customer_address")
+		if not address:
+			return
+		if not self.customer or address not in linked_addresses(self.customer):
+			frappe.throw(
+				_("Address {0} is not linked to Customer {1}.").format(address, self.customer or "-"),
+				title=_("Invalid Address"),
+			)
+		if not (self.get("address_display") or "").strip():
+			self.address_display = address_text(address)
 
 	def whatsapp_target(self):
 		"""``wa.me`` number: 91 + 10 digits, as in the prototypes."""
@@ -77,7 +91,119 @@ class FarmerMixin:
 		line = ", ".join(parts)
 		if self.pin_code:
 			line += " – " + self.pin_code
+		local = any(self.get(f) for f in ("village", "taluka", "district"))
+		if not local and (self.get("address_display") or "").strip():
+			# no Farm Village / Taluka / District picked (State alone, which defaults
+			# to Maharashtra, is not an address): print the fetched ERPNext Address
+			return ", ".join(x.strip() for x in self.address_display.splitlines() if x.strip())
 		return line
+
+
+# --------------------------------------------------------------------------- #
+# ERPNext Address
+# --------------------------------------------------------------------------- #
+ADDRESS_FIELDS = ("address_line1", "address_line2", "city", "county", "state", "pincode", "country")
+
+
+def linked_addresses(customer):
+	"""Enabled Address records linked to a Customer, best candidate first.
+
+	Order: the Customer's ``customer_primary_address``, then addresses marked
+	primary, then shipping, then the most recently modified.
+	"""
+	if not customer:
+		return []
+	names = frappe.get_all(
+		"Dynamic Link",
+		filters={"parenttype": "Address", "link_doctype": "Customer", "link_name": customer},
+		pluck="parent",
+	)
+	if not names:
+		return []
+	rows = frappe.get_all(
+		"Address",
+		filters={"name": ["in", names], "disabled": 0},
+		fields=["name", "is_primary_address", "is_shipping_address", "modified"],
+		order_by="is_primary_address desc, is_shipping_address desc, modified desc",
+	)
+	primary = frappe.db.get_value("Customer", customer, "customer_primary_address")
+	ordered = [r.name for r in rows]
+	if primary in ordered:
+		ordered.remove(primary)
+		ordered.insert(0, primary)
+	return ordered
+
+
+def address_text(address):
+	"""An Address as plain multi-line text (no HTML), for a Small Text field."""
+	a = frappe.db.get_value("Address", address, ADDRESS_FIELDS, as_dict=True) if address else None
+	if not a:
+		return ""
+	city_line = ", ".join(p for p in (a.city, a.county) if p)
+	state_line = " – ".join(p for p in (a.state, a.pincode) if p)
+	lines = [a.address_line1, a.address_line2, city_line, state_line]
+	if a.country and a.country != "India":
+		lines.append(a.country)
+	return "\n".join(x.strip() for x in lines if x and x.strip())
+
+
+def _masters_text(values):
+	"""Fallback address from the Farm Village / Taluka / District / State fields."""
+	parts = [values.get(f) for f in ("village", "taluka", "district", "state") if values.get(f)]
+	line = ", ".join(parts)
+	if values.get("pin_code"):
+		line = f"{line} – {values['pin_code']}" if line else values["pin_code"]
+	return line
+
+
+def _address_values(customer, current):
+	"""``customer_address`` / ``address_display`` for ``customer``, plus any
+	PIN / State the Address can supply that the Customer's own fields lack."""
+	addresses = linked_addresses(customer)
+	address = addresses[0] if addresses else None
+	out = {"customer_address": address or "", "address_count": len(addresses)}
+	if address:
+		a = frappe.db.get_value("Address", address, ["pincode", "state"], as_dict=True) or {}
+		pin = "".join(ch for ch in (a.get("pincode") or "") if ch.isdigit())
+		if not current.get("pin_code") and len(pin) == 6:
+			out["pin_code"] = pin
+		if not current.get("state") and a.get("state") and frappe.db.exists("Farm State", a["state"]):
+			out["state"] = a["state"]
+		out["address_display"] = address_text(address)
+	else:
+		out["address_display"] = _masters_text({**current, **out})
+	return out
+
+
+@frappe.whitelist()
+def get_address_display(customer, address):
+	"""Text of one of a Customer's addresses (the form's Address picker)."""
+	frappe.has_permission("Customer", "read", customer, throw=True)
+	if address not in linked_addresses(customer):
+		frappe.throw(_("Address {0} is not linked to Customer {1}.").format(address, customer))
+	return address_text(address)
+
+
+@frappe.whitelist()
+@frappe.validate_and_sanitize_search_inputs
+def customer_address_query(doctype, txt, searchfield, start, page_len, filters):
+	"""Link query for ``customer_address``: only the chosen Customer's addresses.
+
+	Checked against Customer read permission, so an advisor who may open the
+	farmer can pick the farmer's address without wider Address access.
+	"""
+	customer = (filters or {}).get("customer")
+	if not customer:
+		return []
+	frappe.has_permission("Customer", "read", customer, throw=True)
+	names = linked_addresses(customer)
+	if txt:
+		t = txt.lower()
+		names = [
+			n for n in names if t in n.lower() or t in (address_text(n) or "").lower().replace("\n", " ")
+		]
+	names = names[int(start) : int(start) + int(page_len)]
+	return [(n, (address_text(n) or "").replace("\n", ", ")) for n in names]
 
 
 def _split_name(full):
@@ -104,6 +230,9 @@ def get_farmer_details(customer):
 	out["email_id"] = c.email_id
 	if out.get("whatsapp_no") and out["whatsapp_no"] != c.mobile_no:
 		out["whatsapp_same_as_mobile"] = 0
+	# The address always comes back (possibly empty), so switching to another
+	# farmer never leaves the previous farmer's address on the form.
+	out.update(_address_values(customer, out))
 	return out
 
 

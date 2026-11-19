@@ -93,6 +93,7 @@ frappe.ui.form.on("Spray Schedule", {
 			const row = locals[cdt][cdn];
 			return { filters: { category: row.category || "", is_active: 1 } };
 		});
+		farm_advisory.setup_address_query(frm);
 	},
 
 	onload(frm) {
@@ -137,6 +138,8 @@ frappe.ui.form.on("Spray Schedule", {
 
 	// ── farmer ─────────────────────────────────────────────────────────
 	customer(frm) { farm_advisory.fill_from_customer(frm); },
+	customer_address(frm) { farm_advisory.fill_address(frm); spray_recalc(frm); },
+	address_display(frm) { spray_recalc(frm); },
 	create_customer(frm) { farm_advisory.create_customer(frm); },
 	mobile_no(frm) { farm_advisory.sync_whatsapp(frm); spray_recalc(frm); },
 	whatsapp_same_as_mobile(frm) { farm_advisory.sync_whatsapp(frm); spray_recalc(frm); },

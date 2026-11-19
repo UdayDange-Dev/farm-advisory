@@ -98,6 +98,63 @@ def basal_whatsapp_text(doc):
 	return text
 
 
+def consultation_whatsapp_text(doc):
+	"""``rxText()`` from the Crop Consultancy prototype, covering every crop block."""
+	from farm_advisory.utils import consultation_calc as cc
+
+	lang = doc.get_lang()
+
+	def t(en, mr=None):
+		return tr(en, mr, lang)
+
+	s = frappe.get_cached_doc("Farm Advisory Settings")
+	lines = [f"🌿 *{t('AGRISMART FARM PRESCRIPTION', 'ॲग्रीस्मार्ट फार्म प्रिस्क्रिप्शन')}*", ""]
+	lines.append(f"{t('Farmer', 'शेतकरी')}: {doc.farmer_name or ''}")
+	lines.append(f"{t('Village', 'गाव')}: {', '.join(x for x in (doc.village, doc.taluka) if x)}")
+	lines.append(f"{t('Visit', 'भेट')}: {dmy(doc.visit_date)}")
+	for b in doc.get("crop_blocks") or []:
+		crop = t(b.crop, frappe.db.get_value("Farm Crop", b.crop, "crop_name_mr")) if b.crop else ""
+		variety = frappe.db.get_value("Farm Crop Variety", b.variety, "variety_name") if b.variety else ""
+		bits = [f"{b.block_no}. {crop}" + (f" ({variety})" if variety else "")]
+		if num(b.area):
+			bits.append(f"{fmt(b.area, 2)} {(b.area_unit or '').lower()}")
+		if b.crop_stage:
+			bits.append(t(b.crop_stage, cc.STAGES.get(b.crop_stage)))
+		lines.append(f"{t('Crop', 'पीक')}: " + " · ".join(bits))
+	for i, p in enumerate(doc.get("problems") or [], start=1):
+		lines.append("")
+		pct = f", {fmt(p.affected_pct)}%" if num(p.affected_pct) else ""
+		lines.append(
+			f"{t('Problem', 'समस्या')} {i}: {t(p.problem_type, cc.PROBLEMS.get(p.problem_type))}"
+			f" ({t(p.severity, cc.SEVERITY.get(p.severity))}{pct})"
+		)
+		if p.observation:
+			lines.append(f"{t('Observation', 'निरीक्षण')}: {p.observation}")
+	items = doc.get("prescription_items") or []
+	if items:
+		lines.append("")
+		lines.append(f"*{t('Action', 'उपाय')}:*")
+		for i, p in enumerate(items, start=1):
+			line = f"{i}. {p.product or ''} {fmt(p.dose, 3) if num(p.dose) else ''} {p.dose_unit or ''}"
+			if p.per:
+				line += f" / {p.per}"
+			line += f" — {t(p.method, cc.METHODS.get(p.method))}" if p.method else ""
+			if p.timing:
+				line += f" · {p.timing}"
+			if p.remarks:
+				line += f" · {p.remarks}"
+			lines.append(" ".join(line.split()))
+	if doc.agronomic_notes:
+		lines += ["", f"{t('Notes', 'टिप्पणी')}: {doc.agronomic_notes}"]
+	if doc.next_visit:
+		lines += ["", f"📅 {t('Next visit', 'पुढील भेट')}: {dmy(doc.next_visit)}"]
+	lines += ["", f"{t('Status', 'स्थिती')}: {t(doc.status, cc.STATUS.get(doc.status))}"]
+	if doc.agronomist:
+		lines.append(f"{t('Agronomist', 'तज्ज्ञ')}: {doc.agronomist}")
+	lines += ["", s.company_name or "", t("A Smart Way of Farming", "स्मार्ट शेतीचा मार्ग")]
+	return "\n".join(lines)
+
+
 # --------------------------------------------------------------------------- #
 def basal_csv(doc):
 	buf = io.StringIO()

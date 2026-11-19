@@ -1,0 +1,92 @@
+{
+ "actions": [],
+ "creation": "2026-11-19 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "pump_hp",
+  "source_ref",
+  "discharge_lpm",
+  "head_m",
+  "cb1",
+  "brand",
+  "install_year",
+  "is_solar",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "pump_hp",
+   "fieldtype": "Select",
+   "label": "Pump HP",
+   "in_list_view": 1,
+   "columns": 1,
+   "options": "\n1 HP\n2 HP\n3 HP\n5 HP\n7.5 HP\n10 HP\n12.5 HP\n15 HP\n20 HP\n25 HP\nOther"
+  },
+  {
+   "fieldname": "source_ref",
+   "fieldtype": "Data",
+   "label": "Source / Well ID",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "discharge_lpm",
+   "fieldtype": "Float",
+   "label": "Discharge (LPM)",
+   "non_negative": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "head_m",
+   "fieldtype": "Float",
+   "label": "Head (m)",
+   "non_negative": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "brand",
+   "fieldtype": "Data",
+   "label": "Pump Brand",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "install_year",
+   "fieldtype": "Int",
+   "label": "Install Year"
+  },
+  {
+   "fieldname": "is_solar",
+   "fieldtype": "Check",
+   "label": "Solar"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Working\nNot working",
+   "default": "Working",
+   "in_list_view": 1,
+   "columns": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-11-19 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Agrismart Crop Consultancy",
+ "name": "Crop Consultation Pump",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1,
+ "editable_grid": 1
+}

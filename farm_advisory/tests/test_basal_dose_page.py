@@ -209,8 +209,12 @@ class TestBasalDosePage(IntegrationTestCase):
 		meta = frappe.get_meta(BASAL)
 		self.assertFalse(meta.get_field("recommendation_preview"))
 		self.assertFalse(meta.get_field("report_tab"))
-		# the only HTML field is the crop-wise editor, which is not the print layout
-		self.assertEqual([f.fieldname for f in meta.fields if f.fieldtype == "HTML"], ["crop_cards"])
+		# the HTML fields are the on-screen editors of the Crop Details, Plot Details and
+		# Fertilizer Recommendation tabs — none of them is the print layout
+		self.assertEqual(
+			[f.fieldname for f in meta.fields if f.fieldtype == "HTML"],
+			["crop_details_html", "plot_details_html", "crop_cards"],
+		)
 		self.assertEqual(meta.default_print_format, "Basal Dose Recommendation Report")
 		doc = self._mango_banana()
 		html = frappe.get_print(BASAL, doc.name, "Basal Dose Recommendation Report", doc=doc)

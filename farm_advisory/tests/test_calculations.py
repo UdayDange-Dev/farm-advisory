@@ -28,13 +28,16 @@ class TestSprayCalc(UnitTestCase):
 	def test_area_and_plants(self):
 		# 1 acre, 12 × 9 ft  → 43560 / 108 = 403.33 → 403
 		self.assertEqual(S.auto_plants(1, "Acre", 12, 9, "Feet"), 403)
-		# Guntha is 1089 sq ft; metres convert at 3.28084 ft
-		self.assertEqual(S.auto_plants(1, "Guntha", 3, 3, "Metre"), js_round(1089 / (3 * 3.28084) ** 2))
+		# Guntha is 1089 sq ft; 1 m = 1 / 0.3048 ft exactly (was the truncated 3.28084)
+		self.assertEqual(S.auto_plants(1, "Guntha", 3, 3, "Metre"), js_round(1089 / (3 / 0.3048) ** 2))
 		self.assertEqual(S.auto_plants(1, "Acre", 0, 9, "Feet"), 0)
 
 	def test_water_bases(self):
 		self.assertAlmostEqual(S.total_water("Litres per acre", 200, 2, "Acre", 0), 400)
-		self.assertAlmostEqual(S.total_water("Litres per acre", 200, 1, "Hectare", 0), 200 * 107639.1 / 43560)
+		# 1 ha = 10000 m² = 107639.1041671 sq ft exactly (was the truncated 107639.1)
+		self.assertAlmostEqual(
+			S.total_water("Litres per acre", 200, 1, "Hectare", 0), 200 * (10000 / 0.3048**2) / 43560
+		)
 		self.assertEqual(S.total_water("Litres per plant", 1.5, 1, "Acre", 403), 604.5)
 		self.assertEqual(S.total_water("Total water (manual)", 750, 9, "Acre", 9), 750)
 
@@ -71,9 +74,12 @@ class TestSprayCalc(UnitTestCase):
 
 
 class TestBasalCalc(UnitTestCase):
-	def test_plants_floor(self):
-		# Mango 15 × 15 ft on 1 acre: 4046.856 / 4.572² = 193.6 → floor 193 (not 194)
-		self.assertEqual(B.auto_plants(1, "Acre", 15, 15, "Feet"), 193)
+	def test_plants_nearest(self):
+		# Mango 15 × 15 ft on 1 acre: 43560 / 225 = 193.6 → nearest whole plant 194.
+		# Basal used to floor with truncated constants (193); both calculators now
+		# share utils.measure.plant_count — see that function for the rationale.
+		self.assertEqual(B.auto_plants(1, "Acre", 15, 15, "Feet"), 194)
+		self.assertEqual(B.auto_plants(1, "Acre", 15, 15, "Feet"), S.auto_plants(1, "Acre", 15, 15, "Feet"))
 		self.assertEqual(B.auto_plants(1, "Hectare", 5, 4, "Metre"), 500)
 		self.assertEqual(B.auto_plants(10, "Guntha", 0, 4, "Metre"), 0)
 

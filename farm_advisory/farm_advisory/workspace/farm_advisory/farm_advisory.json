@@ -6,7 +6,7 @@
    "label": "Basal Dose per Month"
   }
  ],
- "content": "[{\"id\": \"hdr_dash\", \"type\": \"header\", \"data\": {\"text\": \"<span class='h4'>Dashboard</span>\", \"col\": 12}}, {\"id\": \"basal_count\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Basal Recommendations\", \"col\": 3}}, {\"id\": \"basal_month\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Basal This Month\", \"col\": 3}}, {\"id\": \"basal_cost\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Basal Fertilizer Cost\", \"col\": 3}}, {\"id\": \"spray_count\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Spray Schedules\", \"col\": 3}}, {\"id\": \"ch_basal\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Basal Dose per Month\", \"col\": 12}}, {\"id\": \"sp1\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"hdr_qa\", \"type\": \"header\", \"data\": {\"text\": \"<span class='h4'>Quick Actions</span>\", \"col\": 12}}, {\"id\": \"sc0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Basal Dose\", \"col\": 4}}, {\"id\": \"sc2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Spray Schedule\", \"col\": 4}}, {\"id\": \"sc5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Settings\", \"col\": 4}}, {\"id\": \"sp2\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"hdr_cd\", \"type\": \"header\", \"data\": {\"text\": \"<span class='h4'>Masters &amp; Reports</span>\", \"col\": 12}}, {\"id\": \"cd0\", \"type\": \"card\", \"data\": {\"card_name\": \"Calculators\", \"col\": 4}}, {\"id\": \"cd1\", \"type\": \"card\", \"data\": {\"card_name\": \"Fertilizer Masters\", \"col\": 4}}, {\"id\": \"cd2\", \"type\": \"card\", \"data\": {\"card_name\": \"Spray Masters\", \"col\": 4}}, {\"id\": \"cd3\", \"type\": \"card\", \"data\": {\"card_name\": \"Locations & Branches\", \"col\": 4}}, {\"id\": \"cd4\", \"type\": \"card\", \"data\": {\"card_name\": \"Reports\", \"col\": 4}}]",
+ "content": "[{\"id\": \"hdr_dash\", \"type\": \"header\", \"data\": {\"text\": \"<span class='h4'>Dashboard</span>\", \"col\": 12}}, {\"id\": \"basal_count\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Basal Recommendations\", \"col\": 3}}, {\"id\": \"basal_month\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Basal This Month\", \"col\": 3}}, {\"id\": \"basal_cost\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Basal Fertilizer Cost\", \"col\": 3}}, {\"id\": \"spray_count\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Spray Schedules\", \"col\": 3}}, {\"id\": \"hdr_cc\", \"type\": \"header\", \"data\": {\"text\": \"<span class='h4'>Crop Consultancy</span>\", \"col\": 12}}, {\"id\": \"cc_card_0\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Consultations\", \"col\": 3}}, {\"id\": \"cc_card_1\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Consultations This Month\", \"col\": 3}}, {\"id\": \"cc_card_2\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Awaiting Agronomist\", \"col\": 3}}, {\"id\": \"cc_card_3\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"High / Critical Cases\", \"col\": 3}}, {\"id\": \"ch_basal\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Basal Dose per Month\", \"col\": 12}}, {\"id\": \"sp1\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"hdr_qa\", \"type\": \"header\", \"data\": {\"text\": \"<span class='h4'>Quick Actions</span>\", \"col\": 12}}, {\"id\": \"sc0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Basal Dose\", \"col\": 4}}, {\"id\": \"sc2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Spray Schedule\", \"col\": 4}}, {\"id\": \"sc5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Settings\", \"col\": 4}}, {\"id\": \"sp2\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"hdr_cd\", \"type\": \"header\", \"data\": {\"text\": \"<span class='h4'>Masters &amp; Reports</span>\", \"col\": 12}}, {\"id\": \"cd0\", \"type\": \"card\", \"data\": {\"card_name\": \"Calculators\", \"col\": 4}}, {\"id\": \"cd1\", \"type\": \"card\", \"data\": {\"card_name\": \"Fertilizer Masters\", \"col\": 4}}, {\"id\": \"cd2\", \"type\": \"card\", \"data\": {\"card_name\": \"Spray Masters\", \"col\": 4}}, {\"id\": \"cd3\", \"type\": \"card\", \"data\": {\"card_name\": \"Locations & Branches\", \"col\": 4}}, {\"id\": \"cd4\", \"type\": \"card\", \"data\": {\"card_name\": \"Reports\", \"col\": 4}}]",
  "creation": "2026-10-23 10:00:00.000000",
  "docstatus": 0,
  "doctype": "Workspace",
@@ -244,9 +244,39 @@
    "link_type": "Report",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Crop Consultancy",
+   "link_count": 2,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Link",
+   "label": "Crop Consultation",
+   "link_to": "Crop Consultation",
+   "link_type": "DocType"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 1,
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Link",
+   "label": "Crop Consultation Register",
+   "link_to": "Crop Consultation Register",
+   "link_type": "Report"
   }
  ],
- "modified": "2026-11-02 14:00:00.000000",
+ "modified": "2026-11-19 12:00:00.000000",
  "modified_by": "Administrator",
  "module": "Farm Advisory",
  "name": "Farm Advisory",
@@ -266,6 +296,22 @@
   {
    "label": "Spray Schedules",
    "number_card_name": "Spray Schedules"
+  },
+  {
+   "label": "Consultations",
+   "number_card_name": "Crop Consultations"
+  },
+  {
+   "label": "Consultations This Month",
+   "number_card_name": "Crop Consultations This Month"
+  },
+  {
+   "label": "Awaiting Agronomist",
+   "number_card_name": "Prescriptions Awaiting Approval"
+  },
+  {
+   "label": "High / Critical Cases",
+   "number_card_name": "High Severity Cases"
   }
  ],
  "owner": "Administrator",
@@ -298,6 +344,14 @@
    "doc_view": "List",
    "label": "Spray Schedule",
    "link_to": "Spray Schedule",
+   "stats_filter": "{}",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "Crop Consultation",
+   "link_to": "Crop Consultation",
    "stats_filter": "{}",
    "type": "DocType"
   },

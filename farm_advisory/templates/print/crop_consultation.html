@@ -1,0 +1,140 @@
+{#- Crop Consultation / Farm Prescription. Context: r = fa_consultation_context(doc).
+    Styles follow the Spray Schedule report so all Agrismart prints look alike. -#}
+<style>
+.fa-cc-rpt{--g9:#124a1f;--g7:#1e6b2e;--g1:#e8f4ea;background:#fff;color:#111;
+  font-family:'Noto Sans','Noto Sans Devanagari','Nirmala UI','Mangal','Segoe UI',Arial,sans-serif;
+  font-size:12px;line-height:1.35;max-width:794px;margin:0 auto}
+.fa-cc-rpt *{box-sizing:border-box}
+.fa-cc-rpt .hd{display:flex;gap:14px;align-items:center;border-bottom:3px solid var(--g7);padding-bottom:10px}
+.fa-cc-rpt .hd img{height:68px;width:auto}
+.fa-cc-rpt .hd .co{flex:1}
+.fa-cc-rpt .hd .co b{font-size:17px;color:var(--g9);display:block}
+.fa-cc-rpt .hd .co span{display:block;font-size:11px;color:#333}
+.fa-cc-rpt .ttl{text-align:center;font-size:16px;font-weight:800;margin:10px 0 8px;color:var(--g9);
+  background:var(--g1);padding:6px;border-radius:6px}
+.fa-cc-rpt .draft{text-align:center;color:#9a3412;border:1px dashed #9a3412;border-radius:6px;padding:4px;
+  margin-bottom:8px;font-weight:700}
+.fa-cc-rpt .box{border:1px solid #9db8a3;border-radius:6px;margin-bottom:8px;overflow:hidden}
+.fa-cc-rpt .box h4{margin:0;background:var(--g7);color:#fff;font-size:11.5px;padding:3px 8px}
+.fa-cc-rpt .kv{display:grid;grid-template-columns:1fr 1fr 1fr}
+.fa-cc-rpt .kv div{padding:4px 8px;border-bottom:1px solid #e3ece5;border-right:1px solid #e3ece5;font-size:11.5px}
+.fa-cc-rpt .kv div.w2{grid-column:span 2}
+.fa-cc-rpt .kv small{display:block;color:#5a6a5e;font-size:10px}
+.fa-cc-rpt table{width:100%;border-collapse:collapse;font-size:11px}
+.fa-cc-rpt th{background:var(--g1);border:1px solid #9db8a3;padding:4px;text-align:left;font-size:10.5px}
+.fa-cc-rpt td{border:1px solid #c5d6c9;padding:4px;vertical-align:top}
+.fa-cc-rpt .adv{border-left:4px solid #2f8b68;padding:4px 8px;margin:6px 8px;background:#f6fbf6}
+.fa-cc-rpt .adv.warn{border-color:#d4a017;background:#fffbea}
+.fa-cc-rpt .adv.bad{border-color:#c0392b;background:#fdf0ef}
+.fa-cc-rpt .adv b{display:block;margin-bottom:2px}
+.fa-cc-rpt .adv ul{margin:2px 0 0 16px;padding:0}
+.fa-cc-rpt .w5{display:grid;grid-template-columns:auto 1fr;gap:1px 8px;font-size:10.5px;margin:3px 0}
+.fa-cc-rpt .w5 i{font-style:normal;font-weight:700;color:var(--g9)}
+.fa-cc-rpt .pad{padding:6px 8px}
+.fa-cc-rpt .chip{display:inline-block;border:1px solid #9db8a3;border-radius:10px;padding:1px 8px;margin:2px;font-size:10.5px}
+.fa-cc-rpt .note{font-size:10px;color:#444;border-top:1px dashed #999;padding-top:6px;margin-top:6px}
+.fa-cc-rpt .sig{display:flex;justify-content:space-between;margin-top:26px;font-size:11px}
+.fa-cc-rpt .sig div{border-top:1px solid #333;padding-top:3px;min-width:170px;text-align:center}
+.fa-cc-rpt .foot{text-align:center;font-size:9.5px;color:#666;margin-top:8px}
+@media print{.fa-cc-rpt tr,.fa-cc-rpt .adv{break-inside:avoid}
+  .fa-cc-rpt thead{display:table-header-group}
+  .fa-cc-rpt *{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+<div class="fa-cc-rpt">
+  <div class="hd">
+    {% if r.logo %}<img src="{{ r.logo }}" alt="">{% endif %}
+    <div class="co">
+      <b>{{ r.company | e }}</b>
+      {% if r.branch %}
+        {% if r.branch.address %}<span>{{ r.branch.address | e }}</span>{% endif %}
+        <span>{{ r.L.phone }}: {{ r.branch.phone | e }}{% if r.email %}  |  {{ r.email | e }}{% endif %}</span>
+        <span><b style="font-size:11px;color:#124a1f">{{ r.branch.label | e }}</b></span>
+      {% elif r.email %}<span>{{ r.email | e }}</span>{% endif %}
+    </div>
+  </div>
+  <div class="ttl">{{ r.L.title }}</div>
+  {% if r.is_draft %}<div class="draft">{{ r.L.draft }}</div>{% endif %}
+
+  <div class="box"><h4>{{ r.L.farmer }}</h4><div class="kv">
+    {% for k in r.farmer %}<div{% if k.cls %} class="{{ k.cls }}"{% endif %}><small>{{ k.label }}</small><b>{{ (k.value or "–") | e }}</b></div>{% endfor %}
+  </div></div>
+
+  {% if r.farm %}
+  <div class="box"><h4>{{ r.L.farm }}</h4><div class="kv">
+    {% for k in r.farm %}<div><small>{{ k.label }}</small><b>{{ k.value | e }}</b></div>{% endfor %}
+  </div></div>
+  {% endif %}
+
+  {% if r.blocks %}
+  <div class="box"><h4>{{ r.L.blocks }}</h4>
+    <table>
+      <thead><tr><th>#</th><th>{{ r.L.crop }}</th><th>{{ r.L.variety }}</th><th>{{ r.L.stage }}</th>
+        <th>{{ r.L.age }}</th><th>{{ r.L.area }}</th><th>{{ r.L.spacing }}</th><th>{{ r.L.plants }}</th></tr></thead>
+      <tbody>{% for b in r.blocks %}
+        <tr><td>{{ b.no }}</td><td><b>{{ b.crop | e }}</b></td><td>{{ b.variety | e }}</td><td>{{ b.stage | e }}</td>
+          <td>{{ b.age | e }}</td><td>{{ b.area | e }}</td><td>{{ b.spacing | e }}</td><td>{{ b.plants }}</td></tr>
+      {% endfor %}</tbody>
+    </table>
+    {% if r.any_manual %}<div class="pad" style="font-size:10px">{{ r.L.manual }}</div>{% endif %}
+  </div>
+  {% endif %}
+
+  {% if r.problems %}
+  <div class="box"><h4>{{ r.L.diagnosis }}</h4>
+    <table>
+      <thead><tr><th>#</th><th>{{ r.L.problem }}</th><th>{{ r.L.block }}</th><th>{{ r.L.part }}</th>
+        <th>{{ r.L.severity }}</th><th>{{ r.L.affected }}</th><th>{{ r.L.observation }}</th></tr></thead>
+      <tbody>{% for p in r.problems %}
+        <tr><td>{{ p.no }}</td><td><b>{{ p.type | e }}</b></td><td>{{ p.block }}</td><td>{{ p.part | e }}</td>
+          <td>{{ p.severity | e }}</td><td>{{ p.pct }}</td><td>{{ p.observation | e }}</td></tr>
+      {% endfor %}</tbody>
+    </table>
+  </div>
+  {% endif %}
+
+  {% if r.advisory %}
+  <div class="box"><h4>{{ r.L.advisory }}</h4>
+    {% for c in r.advisory %}
+    <div class="adv {{ c.level }}"><b>{{ c.title | e }}</b>
+      {% if c.five %}<div class="w5">{% for k, v in c.five %}<i>{{ k | e }}</i><span>{{ v | e }}</span>{% endfor %}</div>{% endif %}
+      <ul>{% for x in c["items"] %}<li>{{ x | e }}</li>{% endfor %}</ul>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if r.irrigation %}
+  <div class="box"><h4>{{ r.L.irrigation }}</h4><div class="kv">
+    {% for k in r.irrigation %}<div><small>{{ k.label }}</small><b>{{ k.value | e }}</b></div>{% endfor %}
+  </div></div>
+  {% endif %}
+
+  <div class="box"><h4>{{ r.L.prescription }}</h4>
+    {% if r.rx %}
+    <table>
+      <thead><tr><th>#</th><th>{{ r.L.product }}</th><th>{{ r.L.dose }}</th><th>{{ r.L.per }}</th>
+        <th>{{ r.L.method }}</th><th>{{ r.L.timing }}</th><th>{{ r.L.remarks }}</th></tr></thead>
+      <tbody>{% for p in r.rx %}
+        <tr><td>{{ p.no }}</td><td><b>{{ p.product | e }}</b></td><td>{{ p.dose | e }}</td><td>{{ p.per | e }}</td>
+          <td>{{ p.method | e }}</td><td>{{ p.timing | e }}</td><td>{{ p.remarks | e }}</td></tr>
+      {% endfor %}</tbody>
+    </table>
+    {% else %}<div class="pad">–</div>{% endif %}
+    {% if r.notes %}<div class="pad"><small>{{ r.L.notes }}</small><br>{{ r.notes | e | replace("\n", "<br>") }}</div>{% endif %}
+  </div>
+
+  <div class="box"><h4>{{ r.L.followups }}</h4><div class="pad">
+    {% for d, dt in r.followups %}<span class="chip">{{ r.L.day }} {{ d }}: {{ dt }}</span>{% endfor %}
+    {% if r.next_visit %}<div style="margin-top:4px"><b>{{ r.L.next_visit }}:</b> {{ r.next_visit }}</div>{% endif %}
+  </div></div>
+
+  <div class="kv box">
+    <div><small>{{ r.L.status }}</small><b>{{ r.status | e }}</b></div>
+    <div><small>{{ r.L.agronomist }}</small><b>{{ (r.agronomist or "–") | e }}</b></div>
+    <div><small>{{ r.L.reference }}</small><b>{{ (r.reference or "–") | e }}</b></div>
+  </div>
+
+  <div class="note">{{ r.L.disclaimer }}</div>
+  <div class="sig"><div>{{ r.L.sign_farmer }}</div><div>{{ r.L.sign_agronomist }}</div></div>
+  <div class="foot">{{ r.L.generated }}: {{ r.generated_on }}{% if r.doc_name %} · {{ r.doc_name }}{% endif %}</div>
+</div>

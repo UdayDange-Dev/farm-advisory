@@ -1,0 +1,155 @@
+{
+ "actions": [],
+ "creation": "2026-11-19 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "block_no",
+  "crop",
+  "variety",
+  "crop_stage",
+  "bahar",
+  "irrigation_method",
+  "plantation_date",
+  "plant_age",
+  "cb1",
+  "area",
+  "area_unit",
+  "row_spacing",
+  "plant_spacing",
+  "spacing_unit",
+  "plant_count",
+  "plants_manual",
+  "area_acre"
+ ],
+ "fields": [
+  {
+   "fieldname": "block_no",
+   "fieldtype": "Int",
+   "label": "Block No.",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "crop",
+   "fieldtype": "Link",
+   "label": "Crop",
+   "options": "Farm Crop",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "variety",
+   "fieldtype": "Link",
+   "label": "Variety",
+   "options": "Farm Crop Variety",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "crop_stage",
+   "fieldtype": "Select",
+   "label": "Crop Stage",
+   "options": "\nNursery\nVegetative\nFlowering\nFruit set\nFruit development\nMaturity\nHarvest\nPost-harvest\nDormancy\nOther",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "bahar",
+   "fieldtype": "Select",
+   "label": "Bahar",
+   "options": "Not applicable\nAmbe Bahar\nMrig Bahar\nHasta Bahar\nFoundation pruning\nFruit pruning",
+   "default": "Not applicable"
+  },
+  {
+   "fieldname": "irrigation_method",
+   "fieldtype": "Select",
+   "label": "Irrigation Method",
+   "options": "\nDrip\nSprinkler\nFlood\nRainfed"
+  },
+  {
+   "fieldname": "plantation_date",
+   "fieldtype": "Date",
+   "label": "Planting Date"
+  },
+  {
+   "fieldname": "plant_age",
+   "fieldtype": "Data",
+   "label": "Plant Age",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "area",
+   "fieldtype": "Float",
+   "label": "Area",
+   "non_negative": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "area_unit",
+   "fieldtype": "Select",
+   "label": "Area Unit",
+   "options": "Acre\nGuntha\nHectare",
+   "default": "Acre"
+  },
+  {
+   "fieldname": "row_spacing",
+   "fieldtype": "Float",
+   "label": "Row Spacing",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "plant_spacing",
+   "fieldtype": "Float",
+   "label": "Plant Spacing",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "spacing_unit",
+   "fieldtype": "Select",
+   "label": "Spacing Unit",
+   "options": "Feet\nMetre",
+   "default": "Feet"
+  },
+  {
+   "fieldname": "plant_count",
+   "fieldtype": "Int",
+   "label": "No. of Plants",
+   "non_negative": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "plants_manual",
+   "fieldtype": "Check",
+   "label": "Plant count entered manually"
+  },
+  {
+   "fieldname": "area_acre",
+   "fieldtype": "Float",
+   "label": "Area (acre)",
+   "read_only": 1,
+   "no_copy": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-11-19 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Agrismart Crop Consultancy",
+ "name": "Crop Consultation Block",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1,
+ "editable_grid": 1
+}
